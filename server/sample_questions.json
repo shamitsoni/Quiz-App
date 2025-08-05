@@ -1,0 +1,19 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the most common metal found at the Earth's core?",
+      "answer": "Iron"
+    },
+    {
+      "id": 2,
+      "question": "How many bones are in the human body?",
+      "answer": "206"
+    },
+    {
+      "id": 3,
+      "question": "What is the chemical symbol for gold?",
+      "answer": "Au"
+    }
+  ]
+}
