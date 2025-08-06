@@ -14,6 +14,21 @@
       "id": 3,
       "question": "What is the chemical symbol for gold?",
       "answer": "Au"
+    },
+    {
+      "id": 4,
+      "question": "What is the smallest unit of matter?",
+      "answer": "Atom"
+    },
+    {
+      "id": 5,
+      "question": "What process converts sunlight into energy in plants?",
+      "answer": "Photosynthesis"
+    },
+    {
+      "id": 6,
+      "question": "What is the name of the ancient trade route that connected the East with the West?",
+      "answer": "The Silk Road"
     }
   ]
 }

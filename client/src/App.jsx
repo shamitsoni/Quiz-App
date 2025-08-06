@@ -30,7 +30,15 @@ function App() {
   return array.length === 0 ? (
     <div>Loading Data...</div>
   ) : (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+      }}
+    >
       <Flashcard
         index={currentIndex}
         question={array[currentIndex].question}
@@ -43,7 +51,7 @@ function App() {
           Next
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
