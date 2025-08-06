@@ -5,6 +5,8 @@ import Flashcard from "./Flashcard";
 function App() {
   const [array, setArray] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
+
   const fetchAPI = async () => {
     const response = await axios.get("http://localhost:5000/api");
     setArray(response.data.questions);
@@ -18,12 +20,14 @@ function App() {
     setCurrentIndex((prevIndex) => {
       return prevIndex + 1 >= array.length ? 0 : prevIndex + 1;
     });
+    setShowAnswer(false);
   };
 
   const prevCard = () => {
     setCurrentIndex((prevIndex) => {
       return prevIndex - 1 < 0 ? array.length - 1 : prevIndex - 1;
     });
+    setShowAnswer(false);
   };
 
   // Check whether the array has been populated before rendering components
@@ -43,6 +47,8 @@ function App() {
         index={currentIndex}
         question={array[currentIndex].question}
         answer={array[currentIndex].answer}
+        showAnswer={showAnswer}
+        setShowAnswer={setShowAnswer}
       />
 
       <div style={{ marginTop: "20px" }}>
