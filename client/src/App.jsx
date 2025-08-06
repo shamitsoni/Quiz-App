@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Flashcard from "./Flashcard";
 
 function App() {
   const [array, setArray] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const fetchAPI = async () => {
     const response = await axios.get("http://localhost:5000/api");
     setArray(response.data.questions);
@@ -12,17 +14,35 @@ function App() {
     fetchAPI();
   }, []);
 
-  return (
+  const nextCard = () => {
+    setCurrentIndex((prevIndex) => {
+      return prevIndex + 1 >= array.length ? 0 : prevIndex + 1;
+    });
+  };
+
+  const prevCard = () => {
+    setCurrentIndex((prevIndex) => {
+      return prevIndex - 1 < 0 ? array.length - 1 : prevIndex - 1;
+    });
+  };
+
+  // Check whether the array has been populated before rendering components
+  return array.length === 0 ? (
+    <div>Loading Data...</div>
+  ) : (
     <>
-      {array.map((data, index) => {
-        return (
-          <div key={index}>
-            <p>Q: {data.question}</p>
-            <p>A: {data.answer}</p>
-            <br />
-          </div>
-        );
-      })}
+      <Flashcard
+        index={currentIndex}
+        question={array[currentIndex].question}
+        answer={array[currentIndex].answer}
+      />
+
+      <div style={{ marginTop: "20px" }}>
+        <button onClick={prevCard}>Previous</button>
+        <button onClick={nextCard} style={{ marginLeft: "10px" }}>
+          Next
+        </button>
+      </div>
     </>
   );
 }
