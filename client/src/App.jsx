@@ -1,3 +1,4 @@
+import "./App.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Flashcard from "./Flashcard";
@@ -69,90 +70,43 @@ function App() {
   };
 
   if (loading) {
+    return <div className="loading-container">Loading questions...</div>;
+  }
+
+  if (error) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          fontSize: "1.2rem",
-        }}
-      >
-        Loading Questions...
-      </div>
-    );
-  } else if (error) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          padding: "20px",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#ffebee",
-            color: "#c62828",
-            padding: "20px",
-            borderRadius: "8px",
-            border: "1px solid #e57373",
-            marginBottom: "20px",
-            textAlign: "center",
-            maxWidth: "400px",
-          }}
-        >
-          <h3 style={{ margin: "0 0 10px 0" }}>Error Loading Questions...</h3>
-          <p style={{ margin: "0" }}>{error}</p>
+      <div className="error-container">
+        <div className="error-message">
+          <h3 className="error-title">Error Loading Questions</h3>
+          <p className="error-text">{error}</p>
         </div>
-        <button
-          onClick={fetchAPI}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#2196f3",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "1rem",
-          }}
-        >
+        <button onClick={fetchAPI} className="btn btn-primary">
           Try Again
         </button>
       </div>
     );
-  } else {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "100vh",
-        }}
-      >
-        <Flashcard
-          index={currentIndex}
-          question={array[currentIndex].question}
-          answer={array[currentIndex].answer}
-          showAnswer={showAnswer}
-          setShowAnswer={setShowAnswer}
-        />
-
-        <div style={{ marginTop: "20px" }}>
-          <button onClick={prevCard}>Previous</button>
-          <button onClick={nextCard} style={{ marginLeft: "10px" }}>
-            Next
-          </button>
-        </div>
-      </div>
-    );
   }
+
+  return (
+    <div className="app-container">
+      <Flashcard
+        index={currentIndex}
+        question={array[currentIndex].question}
+        answer={array[currentIndex].answer}
+        showAnswer={showAnswer}
+        setShowAnswer={setShowAnswer}
+      />
+
+      <div className="button-group">
+        <button onClick={prevCard} className="btn btn-secondary">
+          Previous
+        </button>
+        <button onClick={nextCard} className="btn btn-secondary">
+          Next
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default App;
