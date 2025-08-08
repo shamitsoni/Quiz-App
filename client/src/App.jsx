@@ -8,8 +8,29 @@ function App() {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const fetchAPI = async () => {
-    const response = await axios.get("http://localhost:5000/api");
-    setArray(response.data.questions);
+    try {
+      const response = await axios.get(
+        "https://opentdb.com/api.php?amount=10&type=multiple"
+      );
+
+      const questions = response.data.results.map((ques, index) => {
+        return {
+          id: index + 1,
+          question: decodeHTML(ques.question),
+          answer: decodeHTML(ques.correct_answer),
+        };
+      });
+      setArray(questions);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Helper function to decode HTML entities from content
+  const decodeHTML = (textContent) => {
+    const textArea = document.createElement("textarea");
+    textArea.innerHTML = textContent;
+    return textArea.value;
   };
 
   useEffect(() => {
