@@ -21,10 +21,20 @@ function App() {
       );
 
       const questions = response.data.results.map((ques, index) => {
+        // Retrieve all answer choices
+        const answerChoices = [
+          ques.correct_answer,
+          ...ques.incorrect_answers,
+        ].map((answer) => decodeHTML(answer));
+
+        // Shuffle answer choices
+        const shuffledChoices = answerChoices.sort(() => Math.random() - 0.5);
+
         return {
           id: index + 1,
           question: decodeHTML(ques.question),
           answer: decodeHTML(ques.correct_answer),
+          choices: shuffledChoices,
         };
       });
       setArray(questions);
@@ -87,15 +97,21 @@ function App() {
     );
   }
 
+  let curr = array[currentIndex];
+
   return (
     <div className="app-container">
       <Flashcard
         index={currentIndex}
-        question={array[currentIndex].question}
-        answer={array[currentIndex].answer}
+        question={curr.question}
+        answer={curr.answer}
         showAnswer={showAnswer}
         setShowAnswer={setShowAnswer}
       />
+
+      {curr.choices.map((choice) => {
+        return <div className="choice-button">{choice}</div>;
+      })}
 
       <div className="button-group">
         <button onClick={prevCard} className="btn btn-secondary">
