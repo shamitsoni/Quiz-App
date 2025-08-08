@@ -3,19 +3,19 @@ function Flashcard(props) {
     props.setShowAnswer(!props.showAnswer);
   };
 
+  let cardContent = props.showAnswer ? props.answer : props.question;
   return (
     <div
       key={props.index}
       onClick={handleClick}
       style={{
-        backgroundColor: "#54c670ff",
+        backgroundColor: props.showAnswer ? "#54a4c6ff" : "#54c670ff",
         width: "50%",
         textAlign: "center",
         cursor: "pointer",
       }}
     >
-      <p style={{ fontSize: "1.5rem" }}>{props.question}</p>
-      {props.showAnswer && <p style={{ fontSize: "1rem" }}>{props.answer}</p>}
+      <p style={{ fontSize: "1.5rem" }}>{cardContent}</p>
     </div>
   );
 }
