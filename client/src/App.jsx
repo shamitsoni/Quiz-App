@@ -12,6 +12,7 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
+  const [answered, setAnswered] = useState({});
 
   // Make call to the trivia API and note any errors
   const fetchAPI = async () => {
@@ -70,28 +71,34 @@ function App() {
 
   const nextCard = () => {
     setCurrentIndex((prevIndex) => {
-      return prevIndex + 1 >= array.length ? 0 : prevIndex + 1;
+      const next = prevIndex + 1 >= array.length ? 0 : prevIndex + 1;
+      setSelectedAnswer(answered[next] || null);
+      setShowResult(!!answered[next]);
+      setShowAnswer(!!answered[next]);
+      return next;
     });
-    setShowAnswer(false);
-    setSelectedAnswer(null);
-    setShowResult(false);
   };
 
   const prevCard = () => {
     setCurrentIndex((prevIndex) => {
-      return prevIndex - 1 < 0 ? array.length - 1 : prevIndex - 1;
+      const prev = prevIndex - 1 < 0 ? array.length - 1 : prevIndex - 1;
+      setSelectedAnswer(answered[prev] || null);
+      setShowResult(!!answered[prev]);
+      setShowAnswer(!!answered[prev]);
+      return prev;
     });
-    setShowAnswer(false);
-    setSelectedAnswer(null);
-    setShowResult(false);
   };
 
   const handleChoiceClick = (choice) => {
-    if (selectedAnswer) return;
+    if (selectedAnswer || answered[currentIndex]) {
+      return;
+    }
 
     setSelectedAnswer(choice);
     setShowResult(true);
     setShowAnswer(true);
+
+    setAnswered((prev) => ({ ...prev, [currentIndex]: choice }));
 
     if (choice === array[currentIndex].answer) {
       setScore((prevScore) => prevScore + 1);
