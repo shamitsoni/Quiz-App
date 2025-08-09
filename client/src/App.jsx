@@ -11,6 +11,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [score, setScore] = useState(0);
 
   // Make call to the trivia API and note any errors
   const fetchAPI = async () => {
@@ -91,6 +92,10 @@ function App() {
     setSelectedAnswer(choice);
     setShowResult(true);
     setShowAnswer(true);
+
+    if (choice === array[currentIndex].answer) {
+      setScore((prevScore) => prevScore + 1);
+    }
   };
 
   if (loading) {
@@ -115,6 +120,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="score-display">Score: {score}</div>
       {showResult && (
         <h1>
           {selectedAnswer === curr.answer
@@ -122,6 +128,7 @@ function App() {
             : "Incorrect! Correct answer was:"}
         </h1>
       )}
+
       <Flashcard
         index={currentIndex}
         question={curr.question}

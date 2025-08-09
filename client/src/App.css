@@ -86,3 +86,13 @@
   font-size: 1rem;
   text-align: center;
 }
+
+.score-display {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1976d2;
+  background: #e3f2fd;
+  padding: 12px 32px;
+  border-radius: 24px;
+  margin: 24px 16px;
+}
