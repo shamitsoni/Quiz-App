@@ -9,6 +9,8 @@ function App() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showResult, setShowResult] = useState(false);
 
   // Make call to the trivia API and note any errors
   const fetchAPI = async () => {
@@ -70,6 +72,8 @@ function App() {
       return prevIndex + 1 >= array.length ? 0 : prevIndex + 1;
     });
     setShowAnswer(false);
+    setSelectedAnswer(null);
+    setShowResult(false);
   };
 
   const prevCard = () => {
@@ -77,6 +81,16 @@ function App() {
       return prevIndex - 1 < 0 ? array.length - 1 : prevIndex - 1;
     });
     setShowAnswer(false);
+    setSelectedAnswer(null);
+    setShowResult(false);
+  };
+
+  const handleChoiceClick = (choice) => {
+    if (selectedAnswer) return;
+
+    setSelectedAnswer(choice);
+    setShowResult(true);
+    setShowAnswer(true);
   };
 
   if (loading) {
@@ -101,6 +115,13 @@ function App() {
 
   return (
     <div className="app-container">
+      {showResult && (
+        <h1>
+          {selectedAnswer === curr.answer
+            ? "Correct!"
+            : "Incorrect! Correct answer was:"}
+        </h1>
+      )}
       <Flashcard
         index={currentIndex}
         question={curr.question}
@@ -109,8 +130,16 @@ function App() {
         setShowAnswer={setShowAnswer}
       />
 
-      {curr.choices.map((choice) => {
-        return <div className="choice-button">{choice}</div>;
+      {curr.choices.map((choice, index) => {
+        return (
+          <button
+            key={index}
+            className="choice-button"
+            onClick={() => handleChoiceClick(choice)}
+          >
+            {choice}
+          </button>
+        );
       })}
 
       <div className="button-group">
