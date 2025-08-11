@@ -91,8 +91,17 @@
   font-size: 1.5rem;
   font-weight: bold;
   color: #1976d2;
-  background: #e3f2fd;
+  background-color: #e3f2fd;
   padding: 12px 32px;
   border-radius: 24px;
-  margin: 24px 16px;
+  margin: 20px;
+}
+
+.question-display {
+  font-size: 1rem;
+  color: rgb(174, 52, 164);
+  background-color: rgb(238, 210, 210);
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }

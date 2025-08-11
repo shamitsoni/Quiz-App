@@ -127,6 +127,9 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="question-display">
+        Question {currentIndex + 1}/{array.length}
+      </div>
       <div className="score-display">Score: {score}</div>
       {showResult && (
         <h1>
