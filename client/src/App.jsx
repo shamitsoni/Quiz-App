@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Flashcard from "./Flashcard";
 
@@ -13,6 +13,8 @@ function App() {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState({});
+
+  let curr = array[currentIndex];
 
   // Make call to the trivia API and note any errors
   const fetchAPI = async () => {
@@ -105,6 +107,32 @@ function App() {
     }
   };
 
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (selectedAnswer || answered[currentIndex]) {
+        return;
+      }
+
+      const pressedKey = event.key.toLowerCase();
+      const keyMap = {
+        a: 0,
+        b: 1,
+        c: 2,
+        d: 3,
+      };
+
+      if (pressedKey in keyMap && curr.choices[keyMap[pressedKey]]) {
+        handleChoiceClick(curr.choices[keyMap[pressedKey]]);
+      }
+    },
+    [curr, selectedAnswer, answered, currentIndex]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+
   if (loading) {
     return <div className="loading-container">Loading questions...</div>;
   }
@@ -122,8 +150,6 @@ function App() {
       </div>
     );
   }
-
-  let curr = array[currentIndex];
 
   return (
     <div className="app-container">
@@ -148,13 +174,20 @@ function App() {
       />
 
       {curr.choices.map((choice, index) => {
+        const mapIndicesToChoices = {
+          0: "a",
+          1: "b",
+          2: "c",
+          3: "d",
+        };
+
         return (
           <button
             key={index}
             className="choice-button"
             onClick={() => handleChoiceClick(choice)}
           >
-            {choice}
+            {mapIndicesToChoices[index]}. {choice}
           </button>
         );
       })}
