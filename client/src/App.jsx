@@ -1,75 +1,18 @@
 import "./App.css";
 import { useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import { useTrivia } from "./hooks/useTrivia";
 import Flashcard from "./Flashcard";
 
 function App() {
-  const [array, setArray] = useState([]);
+  const { array, loading, error, fetchAPI } = useTrivia();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState({});
 
   let curr = array[currentIndex];
-
-  // Make call to the trivia API and note any errors
-  const fetchAPI = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await axios.get(
-        "https://opentdb.com/api.php?amount=10&type=multiple"
-      );
-
-      const questions = response.data.results.map((ques, index) => {
-        // Retrieve all answer choices
-        const answerChoices = [
-          ques.correct_answer,
-          ...ques.incorrect_answers,
-        ].map((answer) => decodeHTML(answer));
-
-        // Shuffle answer choices
-        const shuffledChoices = answerChoices.sort(() => Math.random() - 0.5);
-
-        return {
-          id: index + 1,
-          question: decodeHTML(ques.question),
-          answer: decodeHTML(ques.correct_answer),
-          choices: shuffledChoices,
-        };
-      });
-      setArray(questions);
-    } catch (err) {
-      if (err.response?.status === 429) {
-        setError(
-          "Rate limit exceeded! Please wait a few seconds before trying again."
-        );
-      } else if (!err.response) {
-        setError("Network error. Please check your internet connection.");
-      } else {
-        setError("Failed to load questions. Please try again.");
-      }
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Helper function to decode HTML entities from content
-  const decodeHTML = (textContent) => {
-    const textArea = document.createElement("textarea");
-    textArea.innerHTML = textContent;
-    return textArea.value;
-  };
-
-  useEffect(() => {
-    fetchAPI();
-  }, []);
 
   const nextCard = () => {
     setCurrentIndex((prevIndex) => {
