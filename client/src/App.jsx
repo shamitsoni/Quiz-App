@@ -1,7 +1,8 @@
 import "./App.css";
 import { useState, useEffect, useCallback } from "react";
 import { useTrivia } from "./hooks/useTrivia";
-import Flashcard from "./Flashcard";
+import Flashcard from "./components/Flashcard";
+import ChoiceList from "./components/ChoiceList";
 
 function App() {
   const { array, loading, error, fetchAPI } = useTrivia();
@@ -116,24 +117,10 @@ function App() {
         setShowAnswer={setShowAnswer}
       />
 
-      {curr.choices.map((choice, index) => {
-        const mapIndicesToChoices = {
-          0: "a",
-          1: "b",
-          2: "c",
-          3: "d",
-        };
-
-        return (
-          <button
-            key={index}
-            className="choice-button"
-            onClick={() => handleChoiceClick(choice)}
-          >
-            {mapIndicesToChoices[index]}. {choice}
-          </button>
-        );
-      })}
+      <ChoiceList
+        choices={curr.choices}
+        handleChoiceClick={handleChoiceClick}
+      />
 
       <div className="button-group">
         <button onClick={prevCard} className="btn btn-secondary">
