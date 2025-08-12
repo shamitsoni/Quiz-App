@@ -17,9 +17,7 @@ export function useTrivia() {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get(
-        "https://opentdb.com/api.php?amount=10&type=multiple"
-      );
+      const response = await axios.get("http://localhost:5000/api/questions");
       const questions = response.data.results.map((ques, index) => {
         const answerChoices = [
           ques.correct_answer,
@@ -39,8 +37,6 @@ export function useTrivia() {
         setError(
           "Rate limit exceeded! Please wait a few seconds before trying again."
         );
-      } else if (!err.response) {
-        setError("Network error. Please check your internet connection.");
       } else {
         setError("Failed to load questions. Please try again.");
       }

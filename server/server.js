@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import questionData from "./sample_questions.json" assert { type: "json" };
+import axios from "axios";
 
 const app = express();
 const port = 5000;
@@ -10,8 +10,17 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/api", (req, res) => {
-  res.json(questionData);
+app.get("/api/questions", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://opentdb.com/api.php?amount=10&type=multiple"
+    );
+    res.json(response.data);
+  } catch (err) {
+    res.json({
+      error: "Failed to fetch questions. Please wait and try again soon.",
+    });
+  }
 });
 
 app.listen(port, () => {
