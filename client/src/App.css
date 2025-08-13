@@ -105,3 +105,19 @@
   border-radius: 5px;
   margin-bottom: 20px;
 }
+
+.progress-container {
+  width: 20%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  text-align: center;
+  height: 100%;
+  background-color: #4caf50;
+  width: 0%;
+  transition: width 0.5s ease-in-out;
+}

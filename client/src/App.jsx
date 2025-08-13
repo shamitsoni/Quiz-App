@@ -108,7 +108,6 @@ function App() {
             : "Incorrect! Correct answer was:"}
         </h1>
       )}
-
       <Flashcard
         index={currentIndex}
         question={curr.question}
@@ -116,12 +115,17 @@ function App() {
         showAnswer={showAnswer}
         setShowAnswer={setShowAnswer}
       />
-
       <ChoiceList
         choices={curr.choices}
         handleChoiceClick={handleChoiceClick}
       />
-
+      Completion
+      <div className="progress-container">
+        <div
+          className="progress-bar"
+          style={{ width: `${Object.keys(answered).length * 10}%` }}
+        ></div>
+      </div>
       <div className="button-group">
         <button onClick={prevCard} className="btn btn-secondary">
           Previous
