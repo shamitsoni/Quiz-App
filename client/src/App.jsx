@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useTrivia } from "./hooks/useTrivia";
 import Flashcard from "./components/Flashcard";
 import ChoiceList from "./components/ChoiceList";
+import CompletionTable from "./components/CompletionTable";
 
 function App() {
   const { array, loading, error, fetchAPI } = useTrivia();
@@ -97,6 +98,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <CompletionTable questions={array} answered={answered} />
       <div className="question-display">
         Question {currentIndex + 1}/{array.length}
       </div>
@@ -119,13 +121,7 @@ function App() {
         choices={curr.choices}
         handleChoiceClick={handleChoiceClick}
       />
-      Completion
-      <div className="progress-container">
-        <div
-          className="progress-bar"
-          style={{ width: `${Object.keys(answered).length * 10}%` }}
-        ></div>
-      </div>
+
       <div className="button-group">
         <button onClick={prevCard} className="btn btn-secondary">
           Previous
