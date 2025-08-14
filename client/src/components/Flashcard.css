@@ -1,8 +1,9 @@
 .flashcard {
-  width: 50%;
+  width: 100%;
+  max-width: 455px;
   text-align: center;
   cursor: pointer;
-  padding: 20px;
+  padding: 15px 20px;
   border-radius: 10px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 3px solid transparent;

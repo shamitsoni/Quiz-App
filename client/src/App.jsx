@@ -98,38 +98,45 @@ function App() {
 
   return (
     <div className="app-container">
-      <CompletionTable questions={array} answered={answered} />
-      <div className="question-display">
-        Question {currentIndex + 1}/{array.length}
-      </div>
-      <div className="score-display">Score: {score}</div>
-      {showResult && (
-        <h1>
-          {selectedAnswer === curr.answer
-            ? "Correct!"
-            : "Incorrect! Correct answer was:"}
-        </h1>
-      )}
-      <Flashcard
-        index={currentIndex}
-        question={curr.question}
-        answer={curr.answer}
-        showAnswer={showAnswer}
-        setShowAnswer={setShowAnswer}
-      />
-      <ChoiceList
-        choices={curr.choices}
-        handleChoiceClick={handleChoiceClick}
-      />
+      <aside className="sidebar">
+        <CompletionTable questions={array} answered={answered} />
+      </aside>
 
-      <div className="button-group">
-        <button onClick={prevCard} className="btn btn-secondary">
-          Previous
-        </button>
-        <button onClick={nextCard} className="btn btn-secondary">
-          Next
-        </button>
-      </div>
+      <main className="main-content">
+        <div className="question-score-display">
+          <span>
+            Question: {currentIndex + 1}/{array.length}
+          </span>
+          <span>Score: {score}</span>
+        </div>
+        {showResult && (
+          <h1 className="question-result">
+            {selectedAnswer === curr.answer
+              ? "Correct!"
+              : "Incorrect! Correct answer was:"}
+          </h1>
+        )}
+        <Flashcard
+          index={currentIndex}
+          question={curr.question}
+          answer={curr.answer}
+          showAnswer={showAnswer}
+          setShowAnswer={setShowAnswer}
+        />
+        <ChoiceList
+          choices={curr.choices}
+          handleChoiceClick={handleChoiceClick}
+        />
+
+        <div className="button-group">
+          <button onClick={prevCard} className="btn btn-secondary">
+            Previous
+          </button>
+          <button onClick={nextCard} className="btn btn-secondary">
+            Next
+          </button>
+        </div>
+      </main>
     </div>
   );
 }

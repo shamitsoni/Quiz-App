@@ -1,9 +1,6 @@
-import { useState } from "react";
-
 function CompletionTable(props) {
   return (
     <>
-      Completion
       <div className="progress-container">
         <div
           className="progress-bar"
@@ -12,7 +9,7 @@ function CompletionTable(props) {
       </div>
       <table>
         <tr>
-          <th>Question</th>
+          <th style={{ paddingRight: "30px" }}>Question</th>
           <th>Status</th>
         </tr>
 
