@@ -16,7 +16,13 @@ function CompletionTable(props) {
         {props.questions.map((ques, index) => (
           <tr>
             <td>#{ques.id}</td>
-            <td>{props.answered[index] ? "Completed" : "-"}</td>
+            <td style={{ color: "green" }}>
+              {props.answered[index]
+                ? props.answered[index] === ques.answer
+                  ? "✅"
+                  : "❌"
+                : "-"}
+            </td>
           </tr>
         ))}
       </table>
