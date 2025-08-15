@@ -141,3 +141,25 @@ th,
 td {
   text-align: left;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(70, 70, 71, 0.573);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary-screen {
+  background: white;
+  padding: 32px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}

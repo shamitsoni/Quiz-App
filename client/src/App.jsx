@@ -4,6 +4,7 @@ import { useTrivia } from "./hooks/useTrivia";
 import Flashcard from "./components/Flashcard";
 import ChoiceList from "./components/ChoiceList";
 import CompletionTable from "./components/CompletionTable";
+import SummaryScreen from "./components/SummaryScreen";
 
 function App() {
   const { array, loading, error, fetchAPI } = useTrivia();
@@ -13,6 +14,7 @@ function App() {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState({});
+  const [showSummary, setShowSummary] = useState(false);
 
   let curr = array[currentIndex];
 
@@ -78,6 +80,13 @@ function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
+  // Update summary state if all questions are answered
+  useEffect(() => {
+    if (array.length > 0 && Object.keys(answered).length === array.length) {
+      setShowSummary(true);
+    }
+  }, [array, answered]);
+
   if (loading) {
     return <div className="loading-container">Loading questions...</div>;
   }
@@ -92,6 +101,18 @@ function App() {
         <button onClick={fetchAPI} className="btn btn-primary">
           Try Again
         </button>
+      </div>
+    );
+  }
+
+  if (showSummary) {
+    return (
+      <div className="modal-overlay">
+        <SummaryScreen
+          questions={array}
+          answered={Object.values(answered)}
+          onClose={() => setShowSummary(false)}
+        />
       </div>
     );
   }
