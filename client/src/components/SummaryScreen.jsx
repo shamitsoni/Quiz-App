@@ -1,4 +1,4 @@
-function SummaryScreen({ questions, answered, onClose }) {
+function SummaryScreen({ questions, answered, onClose, playAgain }) {
   const total = questions.length;
   const correct = answered.filter(
     (choice, i) => choice === questions[i].answer
@@ -11,7 +11,14 @@ function SummaryScreen({ questions, answered, onClose }) {
         You answered {correct} out of {total} questions correctly.
       </p>
 
-      <button onClick={onClose}>Return to Questions</button>
+      <div className="button-group">
+        <button className="btn btn-secondary" onClick={onClose}>
+          Return to Questions
+        </button>
+        <button className="btn btn-secondary" onClick={playAgain}>
+          Play Again
+        </button>
+      </div>
     </div>
   );
 }

@@ -75,6 +75,18 @@ function App() {
     [curr, selectedAnswer, answered, currentIndex]
   );
 
+  // Reset all quiz states and fetch new questions
+  const handlePlayAgain = () => {
+    setCurrentIndex(0);
+    setShowAnswer(false);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setScore(0);
+    setAnswered({});
+    setShowSummary(false);
+    fetchAPI();
+  };
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -112,6 +124,7 @@ function App() {
           questions={array}
           answered={Object.values(answered)}
           onClose={() => setShowSummary(false)}
+          playAgain={handlePlayAgain}
         />
       </div>
     );
