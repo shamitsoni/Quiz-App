@@ -1,23 +1,33 @@
 import "./Flashcard.css";
 
-function Flashcard(props) {
+function Flashcard({
+  index,
+  question,
+  answer,
+  showAnswer,
+  setShowAnswer,
+  answered,
+}) {
   const handleClick = () => {
-    props.setShowAnswer(!props.showAnswer);
+    if (answered) {
+      setShowAnswer(!showAnswer);
+    }
   };
 
-  const cardContent = props.showAnswer ? props.answer : props.question;
+  const cardContent = showAnswer ? answer : question;
 
   return (
     <div
-      key={props.index}
+      key={index}
       onClick={handleClick}
       className={`flashcard ${
-        props.showAnswer ? "flashcard-answer" : "flashcard-question"
+        showAnswer ? "flashcard-answer" : "flashcard-question"
       }`}
+      style={{ cursor: answered ? "pointer" : "not-allowed" }}
     >
       <p
         className={`flashcard-text ${
-          props.showAnswer ? "flashcard-text-answer" : "flashcard-text-question"
+          showAnswer ? "flashcard-text-answer" : "flashcard-text-question"
         }`}
       >
         {cardContent}

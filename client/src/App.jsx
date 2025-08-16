@@ -156,6 +156,7 @@ function App() {
           answer={curr.answer}
           showAnswer={showAnswer}
           setShowAnswer={setShowAnswer}
+          answered={!!answered[currentIndex]}
         />
         <ChoiceList
           choices={curr.choices}
