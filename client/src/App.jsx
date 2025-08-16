@@ -163,13 +163,22 @@ function App() {
         />
 
         <div className="button-group">
-          <button onClick={prevCard} className="btn btn-secondary">
+          <button className="btn btn-secondary" onClick={prevCard}>
             Previous
           </button>
-          <button onClick={nextCard} className="btn btn-secondary">
+          <button className="btn btn-secondary" onClick={nextCard}>
             Next
           </button>
         </div>
+        {Object.keys(answered).length === array.length && (
+          <button
+            className="btn btn-secondary"
+            id="review-button"
+            onClick={() => setShowSummary(true)}
+          >
+            Review Summary
+          </button>
+        )}
       </main>
     </div>
   );

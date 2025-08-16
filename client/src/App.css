@@ -163,3 +163,9 @@ td {
   width: 100%;
   text-align: center;
 }
+
+#review-button {
+  margin: 10px 0px 0px 120px;
+  width: 100%;
+  max-width: 250px;
+}
