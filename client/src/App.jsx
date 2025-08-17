@@ -161,6 +161,8 @@ function App() {
         <ChoiceList
           choices={curr.choices}
           handleChoiceClick={handleChoiceClick}
+          selectedAnswer={selectedAnswer}
+          correctAnswer={curr.answer}
         />
 
         <div className="button-group">
