@@ -104,16 +104,11 @@
   text-align: center;
 }
 
-.question-result {
-  max-width: 500px;
-  text-align: center;
-}
-
 .question-score-display {
   display: flex;
   justify-content: space-between;
-  background-color: rgb(203, 155, 240);
-  color: rgb(9, 9, 125);
+  background-color: #d4f1f4;
+  color: #05445e;
   font-size: 1.1rem;
   padding: 15px 20px;
   border-radius: 8px;
@@ -180,4 +175,23 @@ td {
   background-color: #ffcdd2;
   border-color: #d32f2f;
   color: #d32f2f;
+}
+
+.card {
+  width: 100%;
+  max-width: 455px;
+  text-align: center;
+  padding: 15px 20px;
+  border-radius: 10px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 3px solid transparent;
+  background-color: #75e6da;
+  color: #189ab4;
+  border-color: transparent;
+}
+
+.card-text {
+  font-size: 1.5rem;
+  transition: all 0.4s ease;
+  margin: 0;
 }

@@ -1,7 +1,6 @@
 import "./App.css";
 import { useState, useEffect, useCallback } from "react";
 import { useTrivia } from "./hooks/useTrivia";
-import Flashcard from "./components/Flashcard";
 import ChoiceList from "./components/ChoiceList";
 import CompletionTable from "./components/CompletionTable";
 import SummaryScreen from "./components/SummaryScreen";
@@ -9,9 +8,7 @@ import SummaryScreen from "./components/SummaryScreen";
 function App() {
   const { array, loading, error, fetchAPI } = useTrivia();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showAnswer, setShowAnswer] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState({});
   const [showSummary, setShowSummary] = useState(false);
@@ -22,8 +19,6 @@ function App() {
     setCurrentIndex((prevIndex) => {
       const next = prevIndex + 1 >= array.length ? 0 : prevIndex + 1;
       setSelectedAnswer(answered[next] || null);
-      setShowResult(!!answered[next]);
-      setShowAnswer(!!answered[next]);
       return next;
     });
   };
@@ -32,8 +27,6 @@ function App() {
     setCurrentIndex((prevIndex) => {
       const prev = prevIndex - 1 < 0 ? array.length - 1 : prevIndex - 1;
       setSelectedAnswer(answered[prev] || null);
-      setShowResult(!!answered[prev]);
-      setShowAnswer(!!answered[prev]);
       return prev;
     });
   };
@@ -44,8 +37,6 @@ function App() {
     }
 
     setSelectedAnswer(choice);
-    setShowResult(true);
-    setShowAnswer(true);
 
     setAnswered((prev) => ({ ...prev, [currentIndex]: choice }));
 
@@ -78,9 +69,7 @@ function App() {
   // Reset all quiz states and fetch new questions
   const handlePlayAgain = () => {
     setCurrentIndex(0);
-    setShowAnswer(false);
     setSelectedAnswer(null);
-    setShowResult(false);
     setScore(0);
     setAnswered({});
     setShowSummary(false);
@@ -143,28 +132,16 @@ function App() {
           </span>
           <span>Score: {score}</span>
         </div>
-        {showResult && (
-          <h1 className="question-result">
-            {selectedAnswer === curr.answer
-              ? "Correct!"
-              : "Incorrect! Correct answer was:"}
-          </h1>
-        )}
-        <Flashcard
-          index={currentIndex}
-          question={curr.question}
-          answer={curr.answer}
-          showAnswer={showAnswer}
-          setShowAnswer={setShowAnswer}
-          answered={!!answered[currentIndex]}
-        />
+
+        <div className="card">
+          <p className="card-text">{curr.question}</p>
+        </div>
         <ChoiceList
           choices={curr.choices}
           handleChoiceClick={handleChoiceClick}
           selectedAnswer={selectedAnswer}
           correctAnswer={curr.answer}
         />
-
         <div className="button-group">
           <button className="btn btn-secondary" onClick={prevCard}>
             Previous
