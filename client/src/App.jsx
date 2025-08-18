@@ -45,22 +45,22 @@ function App() {
     }
   };
 
+  // Navigate and answer questions with keyboard
   const handleKeyDown = useCallback(
     (event) => {
-      if (selectedAnswer || answered[currentIndex]) {
-        return;
+      if (!selectedAnswer && !answered[currentIndex]) {
+        const pressedKey = event.key.toLowerCase();
+        const keyMap = { a: 0, b: 1, c: 2, d: 3 };
+        if (pressedKey in keyMap && curr.choices[keyMap[pressedKey]]) {
+          handleChoiceClick(curr.choices[keyMap[pressedKey]]);
+          return;
+        }
       }
 
-      const pressedKey = event.key.toLowerCase();
-      const keyMap = {
-        a: 0,
-        b: 1,
-        c: 2,
-        d: 3,
-      };
-
-      if (pressedKey in keyMap && curr.choices[keyMap[pressedKey]]) {
-        handleChoiceClick(curr.choices[keyMap[pressedKey]]);
+      if (event.key === "ArrowRight") {
+        nextCard();
+      } else if (event.key === "ArrowLeft") {
+        prevCard();
       }
     },
     [curr, selectedAnswer, answered, currentIndex]

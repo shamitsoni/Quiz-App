@@ -4,6 +4,13 @@ function ChoiceList({
   selectedAnswer,
   correctAnswer,
 }) {
+  const mapIndicesToChoice = {
+    0: "a",
+    1: "b",
+    2: "c",
+    3: "d",
+  };
+
   return (
     <div className="choices-container">
       {choices.map((choice, index) => {
@@ -29,7 +36,7 @@ function ChoiceList({
             onClick={() => handleChoiceClick(choice)}
             disabled={!!selectedAnswer}
           >
-            {choice}
+            {mapIndicesToChoice[index]}. {choice}
           </button>
         );
       })}
