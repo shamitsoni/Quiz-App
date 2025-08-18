@@ -1,6 +1,8 @@
 import "./App.css";
 import { useState, useEffect, useCallback } from "react";
 import { useTrivia } from "./hooks/useTrivia";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
 import ChoiceList from "./components/ChoiceList";
 import CompletionTable from "./components/CompletionTable";
 import SummaryScreen from "./components/SummaryScreen";
@@ -120,47 +122,55 @@ function App() {
   }
 
   return (
-    <div className="app-container">
-      <aside className="sidebar">
-        <CompletionTable questions={array} answered={answered} />
-      </aside>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route
+        path="/quiz"
+        element={
+          <div className="app-container">
+            <aside className="sidebar">
+              <CompletionTable questions={array} answered={answered} />
+            </aside>
 
-      <main className="main-content">
-        <div className="question-score-display">
-          <span>
-            Question: {currentIndex + 1}/{array.length}
-          </span>
-          <span>Score: {score}</span>
-        </div>
+            <main className="main-content">
+              <div className="question-score-display">
+                <span>
+                  Question: {currentIndex + 1}/{array.length}
+                </span>
+                <span>Score: {score}</span>
+              </div>
 
-        <div className="card">
-          <p className="card-text">{curr.question}</p>
-        </div>
-        <ChoiceList
-          choices={curr.choices}
-          handleChoiceClick={handleChoiceClick}
-          selectedAnswer={selectedAnswer}
-          correctAnswer={curr.answer}
-        />
-        <div className="button-group">
-          <button className="btn btn-secondary" onClick={prevCard}>
-            Previous
-          </button>
-          <button className="btn btn-secondary" onClick={nextCard}>
-            Next
-          </button>
-        </div>
-        {Object.keys(answered).length === array.length && (
-          <button
-            className="btn btn-secondary"
-            id="review-button"
-            onClick={() => setShowSummary(true)}
-          >
-            Review Summary
-          </button>
-        )}
-      </main>
-    </div>
+              <div className="card">
+                <p className="card-text">{curr.question}</p>
+              </div>
+              <ChoiceList
+                choices={curr.choices}
+                handleChoiceClick={handleChoiceClick}
+                selectedAnswer={selectedAnswer}
+                correctAnswer={curr.answer}
+              />
+              <div className="button-group">
+                <button className="btn btn-secondary" onClick={prevCard}>
+                  Previous
+                </button>
+                <button className="btn btn-secondary" onClick={nextCard}>
+                  Next
+                </button>
+              </div>
+              {Object.keys(answered).length === array.length && (
+                <button
+                  className="btn btn-secondary"
+                  id="review-button"
+                  onClick={() => setShowSummary(true)}
+                >
+                  Review Summary
+                </button>
+              )}
+            </main>
+          </div>
+        }
+      ></Route>
+    </Routes>
   );
 }
 
