@@ -26,6 +26,7 @@ function SignUp() {
 
   return (
     <div>
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <input
           name="username"

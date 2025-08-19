@@ -49,6 +49,27 @@ app.post("/api/sign-up", async (req, res) => {
   }
 });
 
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const result = await pool.query("SELECT * FROM users WHERE username = $1", [
+      username,
+    ]);
+    const user = result.rows[0];
+    if (!user || password !== user.password) {
+      return res.status(401).json({ error: "Invalid username or password." });
+    }
+
+    res.json({
+      message: "Login successful!",
+      user: { id: user.id, username: user.username },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Login failed." });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}.`);
 });
