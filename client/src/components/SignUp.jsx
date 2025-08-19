@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function SignUp() {
   useEffect(() => {
     document.title = "Sign Up";
   }, []);
   const [form, setForm] = useState({ username: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,7 +21,9 @@ function SignUp() {
         body: JSON.stringify(form),
       });
       const data = await response.json();
-      console.log(data);
+      if (response.ok) {
+        navigate("/");
+      }
     } catch (err) {
       console.error("Sign up failed:", err);
     }

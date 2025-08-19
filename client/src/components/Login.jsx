@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setUser }) {
   useEffect(() => {
     document.title = "Login";
   }, []);
 
   const [form, setForm] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,8 +24,11 @@ function Login() {
         body: JSON.stringify(form),
       });
       const data = await response.json();
+
+      // If login is successful, update user state and redirect to home
       if (response.ok) {
-        alert("Login successful!");
+        setUser(data.user);
+        navigate("/");
       } else {
         setError(data.error || "Login failed.");
       }

@@ -2,17 +2,29 @@ import "./Home.css";
 import { useEffect } from "react";
 import { Link } from "react-router";
 
-function Home() {
+function Home({ user }) {
   useEffect(() => {
     document.title = "Home";
   }, []);
+
+  if (user) {
+    return (
+      <div className="home-container">
+        <h1>Trivia App</h1>
+        <p>Welcome, {user.username}</p>
+        <div className="button-group">
+          <Link to="/quiz">
+            <button className="btn btn-primary">Try Quiz</button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="home-container">
-      <h1>Welcome to Trivia App</h1>
+      <h1>Trivia App</h1>
       <div className="button-group">
-        <Link to="/quiz">
-          <button className="btn btn-primary">Try Quiz</button>
-        </Link>
         <Link to="/login">
           <button className="btn btn-primary">Login</button>
         </Link>
