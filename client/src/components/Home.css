@@ -12,6 +12,10 @@
   font-weight: 700;
 }
 
+.home-container button {
+  margin: 10px;
+}
+
 .home-container .btn-primary:hover {
   background: #1565c0;
 }

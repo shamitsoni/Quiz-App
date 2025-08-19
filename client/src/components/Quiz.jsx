@@ -15,6 +15,10 @@ function Quiz() {
 
   let curr = array[currentIndex];
 
+  useEffect(() => {
+    document.title = "Trivia App";
+  }, []);
+
   const nextCard = () => {
     setCurrentIndex((prevIndex) => {
       const next = prevIndex + 1 >= array.length ? 0 : prevIndex + 1;

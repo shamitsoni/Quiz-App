@@ -9,9 +9,17 @@ function Home() {
   return (
     <div className="home-container">
       <h1>Welcome to Trivia App</h1>
-      <Link to="/quiz">
-        <button className="btn btn-primary">Get Started</button>
-      </Link>
+      <div className="button-group">
+        <Link to="/quiz">
+          <button className="btn btn-primary">Try Quiz</button>
+        </Link>
+        <Link to="/login">
+          <button className="btn btn-primary">Login</button>
+        </Link>
+        <Link to="/sign-up">
+          <button className="btn btn-primary">Sign Up</button>
+        </Link>
+      </div>
     </div>
   );
 }
