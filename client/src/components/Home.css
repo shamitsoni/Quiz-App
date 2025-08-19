@@ -5,6 +5,10 @@
   justify-content: center;
 }
 
+.home-container button {
+  margin: 10px;
+}
+
 .home-container h1 {
   color: #1976d2;
   font-size: 2.2rem;

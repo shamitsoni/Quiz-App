@@ -9,6 +9,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
 
 app.get("/api/questions", async (req, res) => {
   try {
@@ -21,6 +22,11 @@ app.get("/api/questions", async (req, res) => {
       error: "Failed to fetch questions. Please wait and try again soon.",
     });
   }
+});
+
+app.post("/api/sign-up", async (req, res) => {
+  const { username, password } = req.body;
+  res.json({ message: `User: ${username} registered!` });
 });
 
 app.listen(port, () => {
