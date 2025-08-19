@@ -2,7 +2,7 @@ import "./Home.css";
 import { useEffect } from "react";
 import { Link } from "react-router";
 
-function Home({ user }) {
+function Home({ user, handleLogOut }) {
   useEffect(() => {
     document.title = "Home";
   }, []);
@@ -11,10 +11,15 @@ function Home({ user }) {
     return (
       <div className="home-container">
         <h1>Trivia App</h1>
-        <p>Welcome, {user.username}</p>
+        <p>Welcome, {user.username}!</p>
         <div className="button-group">
           <Link to="/quiz">
             <button className="btn btn-primary">Try Quiz</button>
+          </Link>
+          <Link to="/">
+            <button onClick={handleLogOut} className="btn btn-primary">
+              Logout
+            </button>
           </Link>
         </div>
       </div>

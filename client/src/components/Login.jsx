@@ -28,6 +28,7 @@ function Login({ setUser }) {
       // If login is successful, update user state and redirect to home
       if (response.ok) {
         setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
       } else {
         setError(data.error || "Login failed.");
