@@ -10,11 +10,20 @@ function SignUp() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    let value = e.target.value;
+    // Prevent users from having spaces in their username
+    if (e.target.name === "username") {
+      value = value.replace(/\s+/g, "");
+    }
+    setForm({ ...form, [e.target.name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.username || form.username.trim() === "") {
+      setError("Username cannot be empty or have trailing spaces");
+      return;
+    }
     try {
       const response = await fetch("http://localhost:5000/api/sign-up", {
         method: "POST",
