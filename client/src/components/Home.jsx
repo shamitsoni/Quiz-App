@@ -21,6 +21,9 @@ function Home({ user, handleLogOut }) {
               Logout
             </button>
           </Link>
+          <Link to="/stats">
+            <button className="btn btn-primary">Stats</button>
+          </Link>
         </div>
       </div>
     );

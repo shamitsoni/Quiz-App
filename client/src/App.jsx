@@ -5,6 +5,7 @@ import Quiz from "./components/Quiz";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Stats from "./components/Stats";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -24,6 +25,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home user={user} handleLogOut={logout} />} />
+      <Route path="/login" element={<Login setUser={setUser} />} />
+      <Route path="/sign-up" element={<SignUp />} />
       <Route
         path="/quiz"
         element={
@@ -32,8 +35,14 @@ function App() {
           </ProtectedRoute>
         }
       />
-      <Route path="/login" element={<Login setUser={setUser} />} />
-      <Route path="/sign-up" element={<SignUp />} />
+      <Route
+        path="/stats"
+        element={
+          <ProtectedRoute user={user}>
+            <Stats />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
