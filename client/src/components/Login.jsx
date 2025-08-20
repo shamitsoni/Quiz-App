@@ -61,6 +61,8 @@ function Login({ setUser }) {
         <button type="submit">Log In</button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      <h3 style={{ marginTop: "40px" }}>Don't have an account?</h3>
+      <a href="/sign-up">Create an account today!</a>
     </div>
   );
 }

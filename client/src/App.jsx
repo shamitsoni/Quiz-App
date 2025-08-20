@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Quiz from "./components/Quiz";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {

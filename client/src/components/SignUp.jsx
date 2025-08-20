@@ -6,6 +6,7 @@ function SignUp() {
     document.title = "Sign Up";
   }, []);
   const [form, setForm] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,6 +24,8 @@ function SignUp() {
       const data = await response.json();
       if (response.ok) {
         navigate("/");
+      } else {
+        setError("Username already taken!");
       }
     } catch (err) {
       console.error("Sign up failed:", err);
@@ -50,6 +53,7 @@ function SignUp() {
           required
         />
         <button type="submit">Create Account</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
   );
