@@ -5,6 +5,7 @@ import Quiz from "./components/Quiz";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import { useEffect } from "react";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -24,9 +25,16 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home user={user} handleLogOut={logout} />} />
-      <Route path="/quiz" element={<Quiz />}></Route>
+      <Route
+        path="/quiz"
+        element={
+          <ProtectedRoute user={user}>
+            <Quiz />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/login" element={<Login setUser={setUser} />} />
-      <Route path="/sign-up" element={<SignUp />}></Route>
+      <Route path="/sign-up" element={<SignUp />} />
     </Routes>
   );
 }
