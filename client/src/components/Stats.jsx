@@ -1,4 +1,7 @@
 function Stats({ stats }) {
+  if (!stats) {
+    return <div>Loading stats...</div>;
+  }
   return (
     <div>
       <p>Quizzes Completed: {stats.quizzes_completed}</p>

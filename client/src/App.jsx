@@ -10,12 +10,14 @@ import Stats from "./components/Stats";
 function App() {
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState(null);
+  const [loadingUser, setLoadingUser] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+    setLoadingUser(false);
   }, []);
 
   useEffect(() => {
@@ -30,6 +32,10 @@ function App() {
     setUser(null);
     localStorage.removeItem("user");
   };
+
+  if (loadingUser) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Routes>
