@@ -5,13 +5,14 @@ import ChoiceList from "./ChoiceList";
 import CompletionTable from "./CompletionTable";
 import SummaryScreen from "./SummaryScreen";
 
-function Quiz() {
+function Quiz({ user, stats, setStats }) {
   const { array, loading, error, fetchAPI } = useTrivia();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState({});
   const [showSummary, setShowSummary] = useState(false);
+  const [quizCompleted, setQuizCompleted] = useState(false);
 
   let curr = array[currentIndex];
 
@@ -73,6 +74,7 @@ function Quiz() {
     setScore(0);
     setAnswered({});
     setShowSummary(false);
+    setQuizCompleted(false);
     fetchAPI();
   };
 
@@ -85,8 +87,30 @@ function Quiz() {
   useEffect(() => {
     if (array.length > 0 && Object.keys(answered).length === array.length) {
       setShowSummary(true);
+      setQuizCompleted(true);
     }
   }, [array, answered]);
+
+  useEffect(() => {
+    if (quizCompleted) {
+      const newStats = {
+        quizzes_completed: stats.quizzes_completed + 1,
+        questions_answered: stats.questions_answered + array.length,
+        questions_correct: stats.questions_correct + score,
+      };
+      setStats(newStats);
+
+      fetch(`http://localhost:5000/api/stats/${user.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quizzesCompleted: newStats.quizzes_completed,
+          questionsAnswered: newStats.questions_answered,
+          questionsCorrect: newStats.questions_correct,
+        }),
+      });
+    }
+  }, [quizCompleted]);
 
   if (loading) {
     return <div className="loading-container">Loading questions...</div>;

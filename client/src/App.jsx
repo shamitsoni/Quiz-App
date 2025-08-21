@@ -9,6 +9,7 @@ import Stats from "./components/Stats";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -16,6 +17,14 @@ function App() {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      fetch(`http://localhost:5000/api/stats/${user.id}`)
+        .then((res) => res.json())
+        .then((data) => setStats(data));
+    }
+  }, [user]);
 
   const logout = () => {
     setUser(null);
@@ -31,7 +40,7 @@ function App() {
         path="/quiz"
         element={
           <ProtectedRoute user={user}>
-            <Quiz />
+            <Quiz user={user} stats={stats} setStats={setStats} />
           </ProtectedRoute>
         }
       />
@@ -39,7 +48,7 @@ function App() {
         path="/stats"
         element={
           <ProtectedRoute user={user}>
-            <Stats />
+            <Stats stats={stats} />
           </ProtectedRoute>
         }
       />

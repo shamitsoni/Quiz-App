@@ -70,6 +70,47 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+app.get("/api/stats/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const result = await pool.query(
+      "SELECT quizzes_completed, questions_answered, questions_correct FROM stats WHERE user_id = $1",
+      [userId]
+    );
+    if (result.rows.length === 0) {
+      // If no stats exist, create a row for this user
+      await pool.query(
+        "INSERT INTO stats (user_id, quizzes_completed, questions_answered, questions_correct) VALUES ($1, 0, 0, 0)",
+        [userId]
+      );
+      return res.json({
+        quizzes_completed: 0,
+        questions_answered: 0,
+        questions_correct: 0,
+      });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch stats." });
+  }
+});
+
+app.post("/api/stats/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const { quizzesCompleted, questionsAnswered, questionsCorrect } = req.body;
+  try {
+    await pool.query(
+      "UPDATE stats SET quizzes_completed = $1, questions_answered = $2, questions_correct = $3 WHERE user_id = $4",
+      [quizzesCompleted, questionsAnswered, questionsCorrect, userId]
+    );
+    res.json({ message: "Stats updated!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update stats." });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}.`);
 });
