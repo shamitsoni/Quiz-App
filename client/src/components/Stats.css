@@ -1,0 +1,17 @@
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-container p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  border: 2px solid rgb(215, 180, 180);
+}

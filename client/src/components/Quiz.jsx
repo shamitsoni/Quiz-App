@@ -16,6 +16,10 @@ function Quiz({ user, stats, setStats }) {
 
   let curr = array[currentIndex];
 
+  useEffect(() => {
+    document.title = "Quiz";
+  }, []);
+
   const nextCard = () => {
     setCurrentIndex((prevIndex) => {
       const next = prevIndex + 1 >= array.length ? 0 : prevIndex + 1;

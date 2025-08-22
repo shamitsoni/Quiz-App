@@ -54,7 +54,7 @@ function App() {
         path="/stats"
         element={
           <ProtectedRoute user={user}>
-            <Stats stats={stats} />
+            <Stats user={user} stats={stats} />
           </ProtectedRoute>
         }
       />

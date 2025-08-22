@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 function Home({ user, handleLogOut }) {
   useEffect(() => {
-    document.title = "Home";
+    document.title = "Welcome | Home";
   }, []);
 
   if (user) {
