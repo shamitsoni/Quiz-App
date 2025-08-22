@@ -74,19 +74,20 @@ app.get("/api/stats/:userId", async (req, res) => {
   const { userId } = req.params;
   try {
     const result = await pool.query(
-      "SELECT quizzes_completed, questions_answered, questions_correct FROM stats WHERE user_id = $1",
+      "SELECT quizzes_completed, questions_answered, questions_correct, time_elapsed FROM stats WHERE user_id = $1",
       [userId]
     );
     if (result.rows.length === 0) {
       // If no stats exist, create a row for this user
       await pool.query(
-        "INSERT INTO stats (user_id, quizzes_completed, questions_answered, questions_correct) VALUES ($1, 0, 0, 0)",
+        "INSERT INTO stats (user_id, quizzes_completed, questions_answered, questions_correct, time_elapsed) VALUES ($1, 0, 0, 0, 0)",
         [userId]
       );
       return res.json({
         quizzes_completed: 0,
         questions_answered: 0,
         questions_correct: 0,
+        time_elapsed: 0,
       });
     }
     res.json(result.rows[0]);
@@ -98,11 +99,18 @@ app.get("/api/stats/:userId", async (req, res) => {
 
 app.post("/api/stats/:userId", async (req, res) => {
   const { userId } = req.params;
-  const { quizzesCompleted, questionsAnswered, questionsCorrect } = req.body;
+  const { quizzesCompleted, questionsAnswered, questionsCorrect, timeElapsed } =
+    req.body;
   try {
     await pool.query(
-      "UPDATE stats SET quizzes_completed = $1, questions_answered = $2, questions_correct = $3 WHERE user_id = $4",
-      [quizzesCompleted, questionsAnswered, questionsCorrect, userId]
+      "UPDATE stats SET quizzes_completed = $1, questions_answered = $2, questions_correct = $3, time_elapsed = $4 WHERE user_id = $5",
+      [
+        quizzesCompleted,
+        questionsAnswered,
+        questionsCorrect,
+        timeElapsed,
+        userId,
+      ]
     );
     res.json({ message: "Stats updated!" });
   } catch (err) {

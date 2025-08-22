@@ -18,9 +18,16 @@ function Stats({ user, stats }) {
       <p>
         Percentage Correct:{" "}
         {stats.questions_answered > 0
-          ? (stats.questions_correct / stats.questions_answered) * 100
+          ? // Multiply percentage by 100 again before truncation and then divide by 100 to keep two decimal places
+            Math.trunc(
+              (stats.questions_correct / stats.questions_answered) * 100 * 100
+            ) / 100
           : 0}
         %
+      </p>
+      <p>
+        Total Time Spent: {Math.floor(stats.time_elapsed / 60)}:
+        {String(stats.time_elapsed % 60).padStart(2, "0")}
       </p>
     </div>
   );

@@ -116,6 +116,7 @@ function Quiz({ user, stats, setStats }) {
         quizzes_completed: stats.quizzes_completed + 1,
         questions_answered: stats.questions_answered + array.length,
         questions_correct: stats.questions_correct + score,
+        time_elapsed: stats.time_elapsed + quizTime,
       };
       setStats(newStats);
 
@@ -126,6 +127,7 @@ function Quiz({ user, stats, setStats }) {
           quizzesCompleted: newStats.quizzes_completed,
           questionsAnswered: newStats.questions_answered,
           questionsCorrect: newStats.questions_correct,
+          timeElapsed: newStats.time_elapsed,
         }),
       });
     }
