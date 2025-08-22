@@ -1,4 +1,4 @@
-function SummaryScreen({ questions, answered, onClose, playAgain }) {
+function SummaryScreen({ questions, answered, onClose, playAgain, time }) {
   const total = questions.length;
   const correct = answered.filter(
     (choice, i) => choice === questions[i].answer
@@ -7,6 +7,11 @@ function SummaryScreen({ questions, answered, onClose, playAgain }) {
   return (
     <div className="summary-screen">
       <h2>Quiz Completed!</h2>
+      <p>
+        Time elapsed: {Math.floor(time / 60)}:
+        {String(time % 60).padStart(2, "0")}
+      </p>
+
       <p>
         You answered {correct} out of {total} questions correctly.
       </p>

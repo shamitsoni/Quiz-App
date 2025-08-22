@@ -127,6 +127,7 @@ function Quiz() {
         <SummaryScreen
           questions={array}
           answered={Object.values(answered)}
+          time={quizTime}
           onClose={() => setShowSummary(false)}
           playAgain={handlePlayAgain}
         />
