@@ -12,6 +12,8 @@ function Quiz({ user, stats, setStats }) {
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState({});
   const [showSummary, setShowSummary] = useState(false);
+  const [quizTime, setQuizTime] = useState(0);
+  const [timerActive, setTimerActive] = useState(true);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   let curr = array[currentIndex];
@@ -78,6 +80,7 @@ function Quiz({ user, stats, setStats }) {
     setScore(0);
     setAnswered({});
     setShowSummary(false);
+    setTimerActive(true);
     setQuizCompleted(false);
     fetchAPI();
   };
@@ -87,10 +90,22 @@ function Quiz({ user, stats, setStats }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
+  // Update the quiz timer until the quiz is finished
+  useEffect(() => {
+    let interval;
+    if (timerActive) {
+      interval = setInterval(() => {
+        setQuizTime((prev) => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timerActive]);
+
   // Update summary state if all questions are answered
   useEffect(() => {
     if (array.length > 0 && Object.keys(answered).length === array.length) {
       setShowSummary(true);
+      setTimerActive(false);
       setQuizCompleted(true);
     }
   }, [array, answered]);
@@ -140,6 +155,7 @@ function Quiz({ user, stats, setStats }) {
         <SummaryScreen
           questions={array}
           answered={Object.values(answered)}
+          time={quizTime}
           onClose={() => setShowSummary(false)}
           playAgain={handlePlayAgain}
         />
@@ -159,6 +175,10 @@ function Quiz({ user, stats, setStats }) {
             Question: {currentIndex + 1}/{array.length}
           </span>
           <span>Score: {score}</span>
+          <span className="quiz-timer">
+            Time: {Math.floor(quizTime / 60)}:
+            {String(quizTime % 60).padStart(2, "0")}
+          </span>
         </div>
 
         <div className="card">
