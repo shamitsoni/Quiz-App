@@ -1,6 +1,6 @@
 import "./Quiz.css";
 import { useState, useEffect, useCallback } from "react";
-import { useTrivia } from "../hooks/useTrivia";
+import { useTrivia } from "../../hooks/useTrivia";
 import ChoiceList from "./ChoiceList";
 import CompletionTable from "./CompletionTable";
 import SummaryScreen from "./SummaryScreen";

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Quiz from "./components/Quiz";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Stats from "./components/Stats";
+import Home from "./components/Home/Home";
+import Quiz from "./components/Quiz/Quiz";
+import Login from "./components/Auth/Login";
+import SignUp from "./components/Auth/SignUp";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
+import Stats from "./components/Stats/Stats";
 
 function App() {
   const [user, setUser] = useState(null);
