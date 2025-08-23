@@ -12,25 +12,9 @@ function NavBar({ user, handleLogOut, location }) {
       </div>
       <div className="navbar-actions">
         {user ? (
-          location === "portal" ? (
-            <>
-              <Link to="/">
-                <button className="navbar-btn">Home</button>
-              </Link>
-              <button onClick={handleLogOut} className="navbar-btn">
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/portal">
-                <button className="navbar-btn">Portal</button>
-              </Link>
-              <button onClick={handleLogOut} className="navbar-btn">
-                Logout
-              </button>
-            </>
-          )
+          <button onClick={handleLogOut} className="navbar-btn">
+            Logout
+          </button>
         ) : (
           <>
             <Link to="/login">
