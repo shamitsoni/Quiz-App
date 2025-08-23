@@ -1,3 +1,12 @@
+body,
+#root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7fa;
+}
+
 .home-container {
   display: flex;
   flex-direction: column;
@@ -16,6 +25,19 @@
   font-weight: 700;
 }
 
-.home-container .btn-primary:hover {
+.btn-primary {
+  font-size: 1.1rem;
+  padding: 12px 32px;
+  border-radius: 8px;
+  background: #f32152;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+  transition: background 0.2s;
+  margin: 10px 0;
+}
+
+.btn-primary:hover {
   background: #1565c0;
 }

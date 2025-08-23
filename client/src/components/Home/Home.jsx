@@ -1,6 +1,6 @@
 import "./Home.css";
 import { useEffect } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 function Home({ user, handleLogOut }) {
   useEffect(() => {
@@ -14,15 +14,15 @@ function Home({ user, handleLogOut }) {
         <p>Welcome, {user.username}!</p>
         <div className="button-group">
           <Link to="/quiz">
-            <button className="btn btn-primary">Try Quiz</button>
+            <button className="btn-primary">Try Quiz</button>
           </Link>
           <Link to="/">
-            <button onClick={handleLogOut} className="btn btn-primary">
+            <button onClick={handleLogOut} className="btn-primary">
               Logout
             </button>
           </Link>
           <Link to="/stats">
-            <button className="btn btn-primary">Stats</button>
+            <button className="btn-primary">Stats</button>
           </Link>
         </div>
       </div>
