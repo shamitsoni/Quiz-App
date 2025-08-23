@@ -1,46 +1,29 @@
 import "./Home.css";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
 
 function Home({ user, handleLogOut }) {
   useEffect(() => {
     document.title = "Welcome | Home";
   }, []);
 
-  if (user) {
-    return (
-      <div className="home-container">
-        <h1>Trivia App</h1>
-        <p>Welcome, {user.username}!</p>
-        <div className="button-group">
-          <Link to="/quiz">
-            <button className="btn-primary">Try Quiz</button>
-          </Link>
-          <Link to="/">
-            <button onClick={handleLogOut} className="btn-primary">
-              Logout
-            </button>
-          </Link>
-          <Link to="/stats">
-            <button className="btn-primary">Stats</button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="home-container">
-      <h1>Trivia App</h1>
-      <div className="button-group">
-        <Link to="/login">
-          <button className="btn btn-primary">Login</button>
-        </Link>
-        <Link to="/sign-up">
-          <button className="btn btn-primary">Sign Up</button>
-        </Link>
+    <>
+      <NavBar user={user} handleLogOut={handleLogOut} />
+      <div className="home-container">
+        {user && (
+          <>
+            <Link to="/quiz">
+              <button className="content-btn">Play</button>
+            </Link>
+            <Link to="/stats">
+              <button className="content-btn">Stats</button>
+            </Link>
+          </>
+        )}
       </div>
-    </div>
+    </>
   );
 }
 

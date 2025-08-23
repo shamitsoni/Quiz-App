@@ -1,21 +1,7 @@
-body,
-#root {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f7f7fa;
-}
-
 .home-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.home-container button {
-  margin: 10px;
 }
 
 .home-container h1 {
@@ -25,19 +11,47 @@ body,
   font-weight: 700;
 }
 
-.btn-primary {
+.content-btn {
   font-size: 1.1rem;
   padding: 12px 32px;
   border-radius: 8px;
-  background: #f32152;
+  background: #4794e0;
   color: #fff;
   border: none;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
   transition: background 0.2s;
-  margin: 10px 0;
+  margin: 10px;
 }
 
-.btn-primary:hover {
-  background: #1565c0;
+.content-btn:hover {
+  background: #1b579d;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 32px;
+  background: #93beea;
+  color: #fff;
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.navbar-btn {
+  background-color: #d1ddcf;
+}
+
+.navbar-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
