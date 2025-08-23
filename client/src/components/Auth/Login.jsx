@@ -25,11 +25,11 @@ function Login({ setUser }) {
       });
       const data = await response.json();
 
-      // If login is successful, update user state and redirect to home
+      // If login is successful, update user state and redirect to user portal
       if (response.ok) {
         setUser(data.user);
         localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
+        navigate("/portal");
       } else {
         setError(data.error || "Login failed.");
       }

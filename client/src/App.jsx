@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./components/Home/Home";
+import Portal from "./components/Home/Portal";
 import Quiz from "./components/Quiz/Quiz";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
@@ -11,6 +12,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -29,6 +31,7 @@ function App() {
   }, [user]);
 
   const logout = () => {
+    navigate("/");
     setUser(null);
     localStorage.removeItem("user");
   };
@@ -43,9 +46,17 @@ function App() {
       <Route path="/login" element={<Login setUser={setUser} />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route
+        path="/portal"
+        element={
+          <ProtectedRoute user={user} redirectTo={"/"}>
+            <Portal user={user} handleLogOut={logout} />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/quiz"
         element={
-          <ProtectedRoute user={user}>
+          <ProtectedRoute user={user} redirectTo={"/login"}>
             <Quiz user={user} stats={stats} setStats={setStats} />
           </ProtectedRoute>
         }
@@ -53,7 +64,7 @@ function App() {
       <Route
         path="/stats"
         element={
-          <ProtectedRoute user={user}>
+          <ProtectedRoute user={user} redirectTo={"/login"}>
             <Stats user={user} stats={stats} />
           </ProtectedRoute>
         }
