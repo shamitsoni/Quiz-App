@@ -11,7 +11,7 @@ function Portal({ user, handleLogOut }) {
   return (
     <>
       <NavBar user={user} handleLogOut={handleLogOut} location="portal" />
-      <div className="home-container">
+      <div className="portal-body">
         <Link to="/quiz">
           <button className="content-btn">Play</button>
         </Link>
