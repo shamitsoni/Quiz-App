@@ -1,3 +1,4 @@
+import "./Login.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -42,9 +43,9 @@ function SignUp() {
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <h2 className="login-title">Create Account</h2>
+      <form onSubmit={handleSubmit} className="login-form">
         <input
           name="username"
           type="text"
@@ -61,8 +62,10 @@ function SignUp() {
           onChange={handleChange}
           required
         />
-        <button type="submit">Create Account</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button type="submit" className="login-btn">
+          Create Account
+        </button>
+        {error && <p className="login-error">{error}</p>}
       </form>
     </div>
   );

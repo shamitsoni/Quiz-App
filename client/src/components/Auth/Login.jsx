@@ -63,7 +63,7 @@ function Login({ setUser }) {
           Log In
         </button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="login-error">{error}</p>}
       <h3 className="login-subtitle">Don't have an account?</h3>
       <a href="/sign-up" className="signup-link">
         Create one today!
