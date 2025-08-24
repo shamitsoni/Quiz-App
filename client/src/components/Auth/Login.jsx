@@ -1,3 +1,4 @@
+import "./Login.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -39,9 +40,9 @@ function Login({ setUser }) {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="login-container">
+      <h2 className="login-title">Welcome Back</h2>
+      <form onSubmit={handleSubmit} className="login-form">
         <input
           name="username"
           type="text"
@@ -58,11 +59,15 @@ function Login({ setUser }) {
           onChange={handleChange}
           required
         />
-        <button type="submit">Log In</button>
+        <button type="submit" className="login-btn">
+          Log In
+        </button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <h3 style={{ marginTop: "40px" }}>Don't have an account?</h3>
-      <a href="/sign-up">Create an account today!</a>
+      <h3 className="login-subtitle">Don't have an account?</h3>
+      <a href="/sign-up" className="signup-link">
+        Create one today!
+      </a>
     </div>
   );
 }
