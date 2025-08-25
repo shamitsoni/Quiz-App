@@ -9,7 +9,7 @@ function Home({ user, handleLogOut }) {
   }, []);
 
   if (user) {
-    return <Navigate to="/portal" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return (

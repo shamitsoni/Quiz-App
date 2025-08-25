@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 
-function Portal({ user, handleLogOut }) {
+function Dashboard({ user, handleLogOut }) {
   useEffect(() => {
-    document.title = `${user.username} | Portal`;
+    document.title = Dashboard;
   }, []);
 
   return (
     <>
-      <NavBar user={user} handleLogOut={handleLogOut} location="portal" />
-      <div className="portal-body">
+      <NavBar user={user} handleLogOut={handleLogOut} location="dashboard" />
+      <div className="dashboard-body">
         <Link to="/quiz">
           <button className="content-btn">Play</button>
         </Link>
@@ -23,4 +23,4 @@ function Portal({ user, handleLogOut }) {
   );
 }
 
-export default Portal;
+export default Dashboard;

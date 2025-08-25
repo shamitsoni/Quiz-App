@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./components/Home/Home";
-import Portal from "./components/Home/Portal";
+import Dashboard from "./components/Home/Dashboard";
 import Quiz from "./components/Quiz/Quiz";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
@@ -46,10 +46,10 @@ function App() {
       <Route path="/login" element={<Login setUser={setUser} />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route
-        path="/portal"
+        path="/dashboard"
         element={
           <ProtectedRoute user={user} redirectTo={"/"}>
-            <Portal user={user} handleLogOut={logout} />
+            <Dashboard user={user} handleLogOut={logout} />
           </ProtectedRoute>
         }
       />

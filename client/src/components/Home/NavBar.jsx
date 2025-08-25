@@ -4,7 +4,7 @@ function NavBar({ user, handleLogOut, location }) {
   return (
     <nav className="navbar">
       <div className="navbar-title">
-        {location === "portal" ? (
+        {location === "dashboard" ? (
           <span>Welcome, {user.username}</span>
         ) : (
           <span>Trivia App</span>

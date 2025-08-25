@@ -30,7 +30,7 @@ function Login({ setUser }) {
       if (response.ok) {
         setUser(data.user);
         localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/portal");
+        navigate("/dashboard");
       } else {
         setError(data.error || "Login failed.");
       }
