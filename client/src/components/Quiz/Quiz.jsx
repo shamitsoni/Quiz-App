@@ -193,26 +193,29 @@ function Quiz({ user, stats, setStats }) {
           </aside>
 
           <main className="main-content">
-            <div className="question-score-display">
-              <span>
-                Question: {currentIndex + 1}/{array.length}
-              </span>
-              <span>Score: {score}</span>
-              <span className="quiz-timer">
-                Time: {Math.floor(quizTime / 60)}:
-                {String(quizTime % 60).padStart(2, "0")}
-              </span>
+            <div className="question-container">
+              <div className="score-display">
+                <span>
+                  Question: {currentIndex + 1}/{array.length}
+                </span>
+                <span>Score: {score}</span>
+                <span className="quiz-timer">
+                  Time: {Math.floor(quizTime / 60)}:
+                  {String(quizTime % 60).padStart(2, "0")}
+                </span>
+              </div>
+
+              <div className="question-card">
+                <p className="question-text">{curr.question}</p>
+              </div>
+              <ChoiceList
+                choices={curr.choices}
+                handleChoiceClick={handleChoiceClick}
+                selectedAnswer={selectedAnswer}
+                correctAnswer={curr.answer}
+              />
             </div>
 
-            <div className="card">
-              <p className="card-text">{curr.question}</p>
-            </div>
-            <ChoiceList
-              choices={curr.choices}
-              handleChoiceClick={handleChoiceClick}
-              selectedAnswer={selectedAnswer}
-              correctAnswer={curr.answer}
-            />
             <div className="button-group">
               <button className="btn btn-secondary" onClick={prevCard}>
                 Previous
