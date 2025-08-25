@@ -28,11 +28,12 @@ function ChoiceList({
           else if (choice === correctAnswer) {
             className += " correct-choice";
           }
+          className += " answered";
         }
         return (
           <button
-            key={index}
             className={className}
+            key={index}
             onClick={() => handleChoiceClick(choice)}
             disabled={!!selectedAnswer}
           >
