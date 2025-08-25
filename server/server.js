@@ -22,6 +22,7 @@ const pool = new Pool({
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// Retrieve questions from the OpenTDB API
 app.get("/api/questions", async (req, res) => {
   try {
     const response = await axios.get(
@@ -35,6 +36,7 @@ app.get("/api/questions", async (req, res) => {
   }
 });
 
+// Register user into the DB
 app.post("/api/sign-up", async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -49,6 +51,7 @@ app.post("/api/sign-up", async (req, res) => {
   }
 });
 
+// Check login against DB records
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -70,6 +73,7 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+// Retrieve stats by user ID
 app.get("/api/stats/:userId", async (req, res) => {
   const { userId } = req.params;
   try {
@@ -97,6 +101,7 @@ app.get("/api/stats/:userId", async (req, res) => {
   }
 });
 
+// Update stats by user ID
 app.post("/api/stats/:userId", async (req, res) => {
   const { userId } = req.params;
   const { quizzesCompleted, questionsAnswered, questionsCorrect, timeElapsed } =
@@ -110,6 +115,59 @@ app.post("/api/stats/:userId", async (req, res) => {
         questionsCorrect,
         timeElapsed,
         userId,
+      ]
+    );
+    res.json({ message: "Stats updated!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update stats." });
+  }
+});
+
+// Get recent quizzes by user ID
+app.get("/api/completed-quizzes/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT id, questions, user_answers, score, total_questions, time_spent, date_completed
+       FROM completed_quizzes
+       WHERE user_id = $1
+       ORDER BY date_completed DESC
+       LIMIT 10`,
+      [userId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch completed quizzes." });
+  }
+});
+
+// Save a quiz for a specific user
+app.post("/api/completed-quizzes/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const { quizzesCompleted, questionsAnswered, questionsCorrect, timeElapsed } =
+    req.body;
+  const {
+    questions,
+    userAnswers,
+    score,
+    totalQuestions,
+    timeSpent,
+    dataCompleted,
+  } = req.body;
+  try {
+    await pool.query(
+      `INSERT INTO completed_quizzes 
+        (user_id, questions, user_answers, score, total_questions, time_spent)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [
+        userId,
+        JSON.stringify(questions),
+        JSON.stringify(userAnswers),
+        score,
+        totalQuestions,
+        timeSpent,
       ]
     );
     res.json({ message: "Stats updated!" });
