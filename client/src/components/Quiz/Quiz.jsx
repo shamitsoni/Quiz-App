@@ -1,10 +1,12 @@
 import "./Quiz.css";
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTrivia } from "../../hooks/useTrivia";
 import ChoiceList from "./ChoiceList";
 import CompletionTable from "./CompletionTable";
 import SummaryScreen from "./SummaryScreen";
 import NavBar from "../Home/NavBar";
+import ConfirmModal from "./ConfirmModal";
 
 function Quiz({ user, stats, setStats }) {
   const { array, loading, error, fetchAPI } = useTrivia();
@@ -16,8 +18,10 @@ function Quiz({ user, stats, setStats }) {
   const [quizTime, setQuizTime] = useState(0);
   const [timerActive, setTimerActive] = useState(true);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   let curr = array[currentIndex];
+  let navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Quiz";
@@ -168,7 +172,20 @@ function Quiz({ user, stats, setStats }) {
 
   return (
     <>
-      <NavBar user={user} location="quiz" />
+      <NavBar
+        user={user}
+        location="quiz"
+        onExit={() => setShowExitConfirm(true)}
+      />
+      {showExitConfirm && (
+        <ConfirmModal
+          onConfirm={() => {
+            setShowExitConfirm(false);
+            navigate("/dashboard");
+          }}
+          onCancel={() => setShowExitConfirm(false)}
+        />
+      )}
       <div className="app-container">
         <div className="quiz-container">
           <aside className="sidebar">
