@@ -4,6 +4,7 @@ import { useTrivia } from "../../hooks/useTrivia";
 import ChoiceList from "./ChoiceList";
 import CompletionTable from "./CompletionTable";
 import SummaryScreen from "./SummaryScreen";
+import NavBar from "../Home/NavBar";
 
 function Quiz({ user, stats, setStats }) {
   const { array, loading, error, fetchAPI } = useTrivia();
@@ -166,53 +167,56 @@ function Quiz({ user, stats, setStats }) {
   }
 
   return (
-    <div className="app-container">
-      <div className="quiz-container">
-        <aside className="sidebar">
-          <CompletionTable questions={array} answered={answered} />
-        </aside>
+    <>
+      <NavBar user={user} location="quiz" />
+      <div className="app-container">
+        <div className="quiz-container">
+          <aside className="sidebar">
+            <CompletionTable questions={array} answered={answered} />
+          </aside>
 
-        <main className="main-content">
-          <div className="question-score-display">
-            <span>
-              Question: {currentIndex + 1}/{array.length}
-            </span>
-            <span>Score: {score}</span>
-            <span className="quiz-timer">
-              Time: {Math.floor(quizTime / 60)}:
-              {String(quizTime % 60).padStart(2, "0")}
-            </span>
-          </div>
+          <main className="main-content">
+            <div className="question-score-display">
+              <span>
+                Question: {currentIndex + 1}/{array.length}
+              </span>
+              <span>Score: {score}</span>
+              <span className="quiz-timer">
+                Time: {Math.floor(quizTime / 60)}:
+                {String(quizTime % 60).padStart(2, "0")}
+              </span>
+            </div>
 
-          <div className="card">
-            <p className="card-text">{curr.question}</p>
-          </div>
-          <ChoiceList
-            choices={curr.choices}
-            handleChoiceClick={handleChoiceClick}
-            selectedAnswer={selectedAnswer}
-            correctAnswer={curr.answer}
-          />
-          <div className="button-group">
-            <button className="btn btn-secondary" onClick={prevCard}>
-              Previous
-            </button>
-            <button className="btn btn-secondary" onClick={nextCard}>
-              Next
-            </button>
-          </div>
-          {Object.keys(answered).length === array.length && (
-            <button
-              className="btn btn-secondary"
-              id="review-button"
-              onClick={() => setShowSummary(true)}
-            >
-              Review Summary
-            </button>
-          )}
-        </main>
+            <div className="card">
+              <p className="card-text">{curr.question}</p>
+            </div>
+            <ChoiceList
+              choices={curr.choices}
+              handleChoiceClick={handleChoiceClick}
+              selectedAnswer={selectedAnswer}
+              correctAnswer={curr.answer}
+            />
+            <div className="button-group">
+              <button className="btn btn-secondary" onClick={prevCard}>
+                Previous
+              </button>
+              <button className="btn btn-secondary" onClick={nextCard}>
+                Next
+              </button>
+            </div>
+            {Object.keys(answered).length === array.length && (
+              <button
+                className="btn btn-secondary"
+                id="review-button"
+                onClick={() => setShowSummary(true)}
+              >
+                Review Summary
+              </button>
+            )}
+          </main>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
