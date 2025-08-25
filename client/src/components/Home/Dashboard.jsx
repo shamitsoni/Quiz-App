@@ -5,7 +5,7 @@ import NavBar from "./NavBar";
 
 function Dashboard({ user, handleLogOut }) {
   useEffect(() => {
-    document.title = Dashboard;
+    document.title = "Dashboard";
   }, []);
 
   return (

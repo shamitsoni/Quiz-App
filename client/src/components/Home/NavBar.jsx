@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 function NavBar({ user, location, handleLogOut }) {
   const titles = {
     home: "Trivia App",
-    dashboard: `Welcome, ${user.username}!`,
+    dashboard: user && `Welcome, ${user.username}!`,
     quiz: "Quiz in Progress",
-    stats: `${user.username}'s Stats`,
+    stats: user && `${user.username}'s Stats`,
   };
+
   const navTitle = titles[location] || "Trivia App";
   const navActions = getNavActions(user, location, handleLogOut);
+
   return (
     <nav className="navbar">
       <div className="navbar-title">{navTitle}</div>
