@@ -1,12 +1,21 @@
 import "./Home.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
+import RecentResult from "../Quiz/RecentResult";
 
 function Dashboard({ user, handleLogOut }) {
+  const [recentQuizzes, setRecentQuizzes] = useState([]);
+
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/api/completed-quizzes/${user.id}`)
+      .then((res) => res.json())
+      .then((data) => setRecentQuizzes(data));
+  }, [user.id]);
 
   return (
     <>
@@ -18,6 +27,12 @@ function Dashboard({ user, handleLogOut }) {
         <Link to="/stats">
           <button className="content-btn">Stats</button>
         </Link>
+      </div>
+
+      <div className="recent-quiz-container">
+        {recentQuizzes.map((quiz) => (
+          <RecentResult key={quiz.id} quiz={quiz} />
+        ))}
       </div>
     </>
   );
