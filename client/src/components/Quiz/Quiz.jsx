@@ -115,6 +115,7 @@ function Quiz({ user, stats, setStats }) {
     }
   }, [array, answered]);
 
+  // Once quiz has been finished -> Update stats and save game data
   useEffect(() => {
     if (quizCompleted) {
       const newStats = {
@@ -133,6 +134,23 @@ function Quiz({ user, stats, setStats }) {
           questionsAnswered: newStats.questions_answered,
           questionsCorrect: newStats.questions_correct,
           timeElapsed: newStats.time_elapsed,
+        }),
+      });
+
+      fetch(`http://localhost:5000/api/completed-quizzes/${user.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          questions: array,
+          userAnswers: Object.entries(answered).map(
+            ([questionIndex, selectedAnswer]) => ({
+              questionIndex: Number(questionIndex),
+              selectedAnswer: selectedAnswer,
+            })
+          ),
+          score: score,
+          totalQuestions: array.length,
+          timeSpent: quizTime,
         }),
       });
     }

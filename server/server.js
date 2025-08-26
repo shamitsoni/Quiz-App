@@ -146,16 +146,7 @@ app.get("/api/completed-quizzes/:userId", async (req, res) => {
 // Save a quiz for a specific user
 app.post("/api/completed-quizzes/:userId", async (req, res) => {
   const { userId } = req.params;
-  const { quizzesCompleted, questionsAnswered, questionsCorrect, timeElapsed } =
-    req.body;
-  const {
-    questions,
-    userAnswers,
-    score,
-    totalQuestions,
-    timeSpent,
-    dataCompleted,
-  } = req.body;
+  const { questions, userAnswers, score, totalQuestions, timeSpent } = req.body;
   try {
     await pool.query(
       `INSERT INTO completed_quizzes 
