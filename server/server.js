@@ -168,6 +168,23 @@ app.post("/api/completed-quizzes/:userId", async (req, res) => {
   }
 });
 
+app.get("/api/completed-quizzes/:userId/:quizId", async (req, res) => {
+  const { userId, quizId } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT * FROM completed_quizzes WHERE user_id = $1 AND id = $2`,
+      [userId, quizId]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Quiz not found." });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch quiz." });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}.`);
 });

@@ -7,6 +7,7 @@ import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import Stats from "./components/Stats/Stats";
+import ReviewQuiz from "./components/Quiz/ReviewQuiz";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -69,6 +70,8 @@ function App() {
           </ProtectedRoute>
         }
       />
+
+      <Route path="/review:quizId" element={<ReviewQuiz user={user} />} />
     </Routes>
   );
 }

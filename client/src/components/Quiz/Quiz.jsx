@@ -8,7 +8,7 @@ import SummaryScreen from "./SummaryScreen";
 import NavBar from "../Home/NavBar";
 import ConfirmModal from "./ConfirmModal";
 
-function Quiz({ user, stats, setStats }) {
+function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
   const { array, loading, error, fetchAPI } = useTrivia();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
