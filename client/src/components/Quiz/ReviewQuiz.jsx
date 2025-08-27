@@ -7,14 +7,14 @@ function ReviewQuiz({ user }) {
   const [quizData, setQuizData] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/completed-quizzes/${user.id}/${quizId}`)
+    fetch(`http://localhost:5000/api/completed-quizzes/${user.id}/${quizId}`)
       .then((res) => res.json())
       .then((data) => setQuizData(data));
   }, [user.id, quizId]);
 
   if (!quizData) return <div>Loading...</div>;
 
-  return <Quiz reviewMode={true} quizData={quizData} user={user} />;
+  return <Quiz user={user} quizData={quizData} reviewMode={true} />;
 }
 
 export default ReviewQuiz;

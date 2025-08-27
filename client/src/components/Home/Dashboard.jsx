@@ -6,6 +6,11 @@ import RecentResult from "../Quiz/RecentResult";
 
 function Dashboard({ user, handleLogOut }) {
   const [recentQuizzes, setRecentQuizzes] = useState([]);
+  const navigate = useNavigate();
+
+  const handleViewQuiz = (quizId) => {
+    navigate(`/review/${quizId}`);
+  };
 
   useEffect(() => {
     document.title = "Dashboard";
@@ -31,7 +36,7 @@ function Dashboard({ user, handleLogOut }) {
 
       <div className="recent-quiz-container">
         {recentQuizzes.map((quiz) => (
-          <RecentResult key={quiz.id} quiz={quiz} />
+          <RecentResult key={quiz.id} quiz={quiz} onViewQuiz={handleViewQuiz} />
         ))}
       </div>
     </>

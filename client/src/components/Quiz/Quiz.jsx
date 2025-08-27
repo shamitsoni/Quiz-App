@@ -9,16 +9,31 @@ import NavBar from "../Home/NavBar";
 import ConfirmModal from "./ConfirmModal";
 
 function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
-  const { array, loading, error, fetchAPI } = useTrivia();
+  const [liveScore, setLiveScore] = useState(0);
+  const [liveTime, setLiveTime] = useState(0);
+  const [liveAnswered, setLiveAnswered] = useState({});
+  const [liveSelectedAnswer, setLiveSelectedAnswer] = useState(null);
+  const { loading, error, fetchAPI } = useTrivia();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [score, setScore] = useState(0);
-  const [answered, setAnswered] = useState({});
   const [showSummary, setShowSummary] = useState(false);
-  const [quizTime, setQuizTime] = useState(0);
   const [timerActive, setTimerActive] = useState(true);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+
+  const array = reviewMode ? quizData.questions : useTrivia().array;
+  const score = reviewMode ? quizData.score : liveScore;
+  const quizTime = reviewMode ? quizData.time_spent : liveTime;
+  const answered = reviewMode
+    ? Object.fromEntries(
+        quizData.user_answers.map(({ questionIndex, selectedAnswer }) => [
+          questionIndex,
+          selectedAnswer,
+        ])
+      )
+    : liveAnswered;
+  const selectedAnswer = reviewMode
+    ? answered[currentIndex] || null
+    : liveSelectedAnswer || null;
 
   let curr = array[currentIndex];
   let navigate = useNavigate();
@@ -30,7 +45,7 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
   const nextCard = () => {
     setCurrentIndex((prevIndex) => {
       const next = prevIndex + 1 >= array.length ? 0 : prevIndex + 1;
-      setSelectedAnswer(answered[next] || null);
+      setLiveSelectedAnswer(answered[next] || null);
       return next;
     });
   };
@@ -38,29 +53,29 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
   const prevCard = () => {
     setCurrentIndex((prevIndex) => {
       const prev = prevIndex - 1 < 0 ? array.length - 1 : prevIndex - 1;
-      setSelectedAnswer(answered[prev] || null);
+      setLiveSelectedAnswer(answered[prev] || null);
       return prev;
     });
   };
 
   const handleChoiceClick = (choice) => {
-    if (selectedAnswer || answered[currentIndex]) {
+    if (liveSelectedAnswer || answered[currentIndex]) {
       return;
     }
 
-    setSelectedAnswer(choice);
+    setLiveSelectedAnswer(choice);
 
-    setAnswered((prev) => ({ ...prev, [currentIndex]: choice }));
+    setLiveAnswered((prev) => ({ ...prev, [currentIndex]: choice }));
 
     if (choice === array[currentIndex].answer) {
-      setScore((prevScore) => prevScore + 1);
+      setLiveScore((prevScore) => prevScore + 1);
     }
   };
 
   // Navigate and answer questions with keyboard
   const handleKeyDown = useCallback(
     (event) => {
-      if (!selectedAnswer && !answered[currentIndex]) {
+      if (!liveSelectedAnswer && !liveAnswered[currentIndex]) {
         const pressedKey = event.key.toLowerCase();
         const keyMap = { a: 0, b: 1, c: 2, d: 3 };
         if (pressedKey in keyMap && curr.choices[keyMap[pressedKey]]) {
@@ -75,15 +90,15 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
         prevCard();
       }
     },
-    [curr, selectedAnswer, answered, currentIndex]
+    [curr, liveSelectedAnswer, liveAnswered, currentIndex]
   );
 
   // Reset all quiz states and fetch new questions
   const handlePlayAgain = () => {
     setCurrentIndex(0);
-    setSelectedAnswer(null);
-    setScore(0);
-    setAnswered({});
+    setLiveSelectedAnswer(null);
+    setLiveScore(0);
+    setLiveAnswered({});
     setShowSummary(false);
     setTimerActive(true);
     setQuizCompleted(false);
@@ -100,7 +115,7 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
     let interval;
     if (timerActive) {
       interval = setInterval(() => {
-        setQuizTime((prev) => prev + 1);
+        setLiveTime((prev) => prev + 1);
       }, 1000);
     }
     return () => clearInterval(interval);
@@ -108,12 +123,12 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
 
   // Update summary state if all questions are answered
   useEffect(() => {
-    if (array.length > 0 && Object.keys(answered).length === array.length) {
+    if (array.length > 0 && Object.keys(liveAnswered).length === array.length) {
       setShowSummary(true);
       setTimerActive(false);
       setQuizCompleted(true);
     }
-  }, [array, answered]);
+  }, [array, liveAnswered]);
 
   // Once quiz has been finished -> Update stats and save game data
   useEffect(() => {
@@ -121,8 +136,8 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
       const newStats = {
         quizzes_completed: stats.quizzes_completed + 1,
         questions_answered: stats.questions_answered + array.length,
-        questions_correct: stats.questions_correct + score,
-        time_elapsed: stats.time_elapsed + quizTime,
+        questions_correct: stats.questions_correct + liveScore,
+        time_elapsed: stats.time_elapsed + liveTime,
       };
       setStats(newStats);
 
@@ -142,15 +157,15 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           questions: array,
-          userAnswers: Object.entries(answered).map(
+          userAnswers: Object.entries(liveAnswered).map(
             ([questionIndex, selectedAnswer]) => ({
               questionIndex: Number(questionIndex),
               selectedAnswer: selectedAnswer,
             })
           ),
-          score: score,
+          score: liveScore,
           totalQuestions: array.length,
-          timeSpent: quizTime,
+          timeSpent: liveTime,
         }),
       });
     }

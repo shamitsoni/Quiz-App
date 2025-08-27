@@ -1,4 +1,4 @@
-function RecentResult({ quiz }) {
+function RecentResult({ quiz, onViewQuiz }) {
   // Parse and format date string from DB
   const date = new Date(quiz.date_completed);
   const formattedDate = date.toLocaleDateString();
@@ -15,7 +15,7 @@ function RecentResult({ quiz }) {
       <p>Questions: {quiz.total_questions}</p>
       <p>Score: {quiz.score}</p>
       <p>Time Spent: {quiz.time_spent}s</p>
-      <button>View Quiz</button>
+      <button onClick={() => onViewQuiz(quiz.id)}>View Quiz</button>
     </div>
   );
 }

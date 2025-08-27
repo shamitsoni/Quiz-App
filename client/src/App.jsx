@@ -71,7 +71,7 @@ function App() {
         }
       />
 
-      <Route path="/review:quizId" element={<ReviewQuiz user={user} />} />
+      <Route path="/review/:quizId" element={<ReviewQuiz user={user} />} />
     </Routes>
   );
 }
