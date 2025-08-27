@@ -207,7 +207,7 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
     <>
       <NavBar
         user={user}
-        location="quiz"
+        location={reviewMode ? "review" : "quiz"}
         onExit={() => setShowExitConfirm(true)}
       />
       {showExitConfirm && (

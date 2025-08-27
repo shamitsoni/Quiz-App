@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function NavBar({ user, location, handleLogOut, onExit }) {
   const titles = {
     home: "Trivia App",
     dashboard: user && `Welcome, ${user.username}!`,
-    quiz: "Quiz in Progress",
+    quiz: "Attempting Quiz",
+    review: "Reviewing Quiz",
     stats: user && `${user.username}'s Stats`,
   };
 
@@ -20,7 +21,6 @@ function NavBar({ user, location, handleLogOut, onExit }) {
 }
 
 function getNavActions(user, location, handleLogOut, onExit) {
-  const navigate = useNavigate();
   if (!user) {
     return (
       <>
@@ -42,6 +42,14 @@ function getNavActions(user, location, handleLogOut, onExit) {
         </button>
       );
     case "quiz":
+      return (
+        <>
+          <button className="navbar-btn" onClick={onExit}>
+            Back to Dashboard
+          </button>
+        </>
+      );
+    case "review":
       return (
         <>
           <button className="navbar-btn" onClick={onExit}>
