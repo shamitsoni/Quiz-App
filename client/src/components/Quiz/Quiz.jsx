@@ -8,6 +8,8 @@ import SummaryScreen from "./SummaryScreen";
 import NavBar from "../Home/NavBar";
 import ConfirmModal from "./ConfirmModal";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
   const [liveScore, setLiveScore] = useState(0);
   const [liveTime, setLiveTime] = useState(0);
@@ -141,7 +143,7 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
       };
       setStats(newStats);
 
-      fetch(`http://localhost:5000/api/stats/${user.id}`, {
+      fetch(`${SERVER_URL}/api/stats/${user.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -152,7 +154,7 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
         }),
       });
 
-      fetch(`http://localhost:5000/api/completed-quizzes/${user.id}`, {
+      fetch(`${SERVER_URL}/api/completed-quizzes/${user.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

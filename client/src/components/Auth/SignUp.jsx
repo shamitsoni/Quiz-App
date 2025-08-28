@@ -2,6 +2,8 @@ import "./Login.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 function SignUp() {
   useEffect(() => {
     document.title = "Sign Up";
@@ -26,7 +28,7 @@ function SignUp() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/api/sign-up", {
+      const response = await fetch(`${SERVER_URL}/api/sign-up`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

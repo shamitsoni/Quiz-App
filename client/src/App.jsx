@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import Stats from "./components/Stats/Stats";
 import ReviewQuiz from "./components/Quiz/ReviewQuiz";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 function App() {
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState(null);
@@ -25,7 +27,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/api/stats/${user.id}`)
+      fetch(`${SERVER_URL}/api/stats/${user.id}`)
         .then((res) => res.json())
         .then((data) => setStats(data));
     }

@@ -2,6 +2,8 @@ import "./Login.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 function Login({ setUser }) {
   useEffect(() => {
     document.title = "Login";
@@ -19,7 +21,7 @@ function Login({ setUser }) {
     e.preventDefault();
     setError("");
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch(`${SERVER_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
