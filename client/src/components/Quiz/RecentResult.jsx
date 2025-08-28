@@ -6,7 +6,6 @@ function RecentResult({ quiz, onViewQuiz }) {
     hour: "2-digit",
     minute: "2-digit",
   });
-
   return (
     <div className="recent-quiz">
       <p>
@@ -15,6 +14,27 @@ function RecentResult({ quiz, onViewQuiz }) {
       <p>Questions: {quiz.total_questions}</p>
       <p>Score: {quiz.score}</p>
       <p>Time Spent: {quiz.time_spent}s</p>
+
+      <div className="recent-quiz-bar">
+        {quiz.questions.map((ques, index) => {
+          // Find the user's answer matching with the question number
+          const userAnswerObj = quiz.user_answers.find(
+            (ans) => ans.questionIndex === index
+          );
+          const isCorrect =
+            userAnswerObj && userAnswerObj.selectedAnswer === ques.answer;
+
+          // Render correct/incorrect segments and provide title on hover
+          return (
+            <span
+              key={index}
+              className={`bar-piece ${isCorrect ? "correct" : "incorrect"}`}
+              title={`Q${index + 1}: ${isCorrect ? "Correct" : "Incorrect"}`}
+            />
+          );
+        })}
+      </div>
+
       <button onClick={() => onViewQuiz(quiz.id)}>View Quiz</button>
     </div>
   );

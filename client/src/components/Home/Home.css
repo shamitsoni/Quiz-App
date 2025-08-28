@@ -109,7 +109,7 @@
 .recent-quiz-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   gap: 15px;
   margin-top: 32px;
 }
@@ -118,4 +118,28 @@
   width: 100%;
   max-width: 600px;
   background: rgb(201, 233, 237);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.recent-quiz-bar {
+  display: flex;
+  gap: 2px;
+  margin: 12px 0 8px 0;
+}
+
+.bar-piece {
+  flex: 1;
+  height: 15px;
+  border-radius: 4px;
+  background: #eee;
+  transition: background 0.2s;
+}
+
+.bar-piece.correct {
+  background: #4caf50;
+}
+
+.bar-piece.incorrect {
+  background: #f44336;
 }
