@@ -13,14 +13,14 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
   const [liveTime, setLiveTime] = useState(0);
   const [liveAnswered, setLiveAnswered] = useState({});
   const [liveSelectedAnswer, setLiveSelectedAnswer] = useState(null);
-  const { loading, error, fetchAPI } = useTrivia();
+  const { loading, error, fetchAPI, array: triviaArray } = useTrivia();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
   const [timerActive, setTimerActive] = useState(true);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
-  const array = reviewMode ? quizData.questions : useTrivia().array;
+  const array = reviewMode ? quizData.questions : triviaArray;
   const score = reviewMode ? quizData.score : liveScore;
   const quizTime = reviewMode ? quizData.time_spent : liveTime;
   const answered = reviewMode
