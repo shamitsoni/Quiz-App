@@ -209,6 +209,7 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
         user={user}
         location={reviewMode ? "review" : "quiz"}
         onExit={() => setShowExitConfirm(true)}
+        quizCompleted={quizCompleted}
       />
       {showExitConfirm && (
         <ConfirmModal
