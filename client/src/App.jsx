@@ -71,7 +71,14 @@ function App() {
         }
       />
 
-      <Route path="/review/:quizId" element={<ReviewQuiz user={user} />} />
+      <Route
+        path="/review/:quizId"
+        element={
+          <ProtectedRoute user={user} redirectTo={"/login"}>
+            <ReviewQuiz user={user} />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
