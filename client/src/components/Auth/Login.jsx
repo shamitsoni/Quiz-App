@@ -66,10 +66,16 @@ function Login({ setUser }) {
         </button>
       </form>
       {error && <p className="login-error">{error}</p>}
-      <h3 className="login-subtitle">Don't have an account?</h3>
-      <a href="/sign-up" className="signup-link">
-        Create one today!
-      </a>
+      <h3 className="login-subtitle">Trouble signing in?</h3>
+
+      <div className="link-container">
+        <a href="/sign-up" className="help-link">
+          Create an account
+        </a>
+        <a href="/reset-password" className="help-link">
+          Forgot password?
+        </a>
+      </div>
     </div>
   );
 }

@@ -56,7 +56,13 @@
   font-size: 1.1rem;
 }
 
-.signup-link {
+.link-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.help-link {
   color: #1976d2;
   text-decoration: underline;
   font-weight: 500;
