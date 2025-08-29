@@ -27,20 +27,31 @@ function Dashboard({ user, handleLogOut }) {
   return (
     <>
       <NavBar user={user} handleLogOut={handleLogOut} location="dashboard" />
-      <div className="dashboard-body">
-        <Link to="/quiz">
-          <button className="content-btn">Play</button>
-        </Link>
-        <Link to="/stats">
-          <button className="content-btn">Stats</button>
-        </Link>
-      </div>
+      <main className="dashboard-grid">
+        <section className="dashboard-btns">
+          <Link to="/quiz">
+            <button className="content-btn">Play</button>
+          </Link>
+          <Link to="/stats">
+            <button className="content-btn">Stats</button>
+          </Link>
+        </section>
 
-      <div className="recent-quiz-container">
-        {recentQuizzes.map((quiz) => (
-          <RecentResult key={quiz.id} quiz={quiz} onViewQuiz={handleViewQuiz} />
-        ))}
-      </div>
+        <section className="recent-results-section">
+          <header>
+            <h1 className="recent-quiz-header">Recent Results</h1>
+          </header>
+          <div className="recent-quiz-container">
+            {recentQuizzes.map((quiz) => (
+              <RecentResult
+                key={quiz.id}
+                quiz={quiz}
+                onViewQuiz={handleViewQuiz}
+              />
+            ))}
+          </div>
+        </section>
+      </main>
     </>
   );
 }

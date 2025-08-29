@@ -35,7 +35,9 @@ function RecentResult({ quiz, onViewQuiz }) {
         })}
       </div>
 
-      <button onClick={() => onViewQuiz(quiz.id)}>View Quiz</button>
+      <button onClick={() => onViewQuiz(quiz.id)} className="view-btn">
+        View Quiz
+      </button>
     </div>
   );
 }
