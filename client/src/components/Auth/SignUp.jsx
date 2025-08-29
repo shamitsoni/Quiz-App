@@ -64,6 +64,14 @@ function SignUp() {
           onChange={handleChange}
           required
         />
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          required
+        />
         <button type="submit" className="login-btn">
           Create Account
         </button>

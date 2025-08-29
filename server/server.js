@@ -40,13 +40,13 @@ app.get("/api/questions", async (req, res) => {
 
 // Register user into the DB
 app.post("/api/sign-up", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [
-      username,
-      hashedPassword,
-    ]);
+    await pool.query(
+      "INSERT INTO users (username, password, email) VALUES ($1, $2, $3)",
+      [username, hashedPassword, email]
+    );
     res.json({ message: "User has been registered!" });
   } catch (err) {
     console.error(err);
