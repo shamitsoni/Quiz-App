@@ -8,7 +8,7 @@ function SignUp() {
   useEffect(() => {
     document.title = "Sign Up";
   }, []);
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({ username: "", password: "", email: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 

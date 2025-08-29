@@ -80,6 +80,24 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+// Verify email when resetting password
+app.post("/api/reset-password", async (req, res) => {
+  const { email } = req.body;
+  try {
+    const result = await pool.query("SELECT id FROM users WHERE email = $1", [
+      email,
+    ]);
+    if (result.rows.length === 0) {
+      return res.json({ success: false, message: "Email was not found" });
+    } else {
+      return res.json({ success: true, message: "Email was found." });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+});
+
 // Retrieve stats by user ID
 app.get("/api/stats/:userId", async (req, res) => {
   const { userId } = req.params;
