@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import axios from "axios";
-import { Pool } from "pg";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+import { Pool } from "pg";
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ const pool = new Pool({
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
 });
+const SALT_ROUNDS = 10;
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -40,10 +42,11 @@ app.get("/api/questions", async (req, res) => {
 app.post("/api/sign-up", async (req, res) => {
   const { username, password } = req.body;
   try {
-    const result = await pool.query(
-      "INSERT INTO users (username, password) VALUES ($1, $2)",
-      [username, password]
-    );
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [
+      username,
+      hashedPassword,
+    ]);
     res.json({ message: "User has been registered!" });
   } catch (err) {
     console.error(err);
@@ -59,7 +62,11 @@ app.post("/api/login", async (req, res) => {
       username,
     ]);
     const user = result.rows[0];
-    if (!user || password !== user.password) {
+    if (!user) {
+      return res.status(401).json({ error: "Invalid username or password." });
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
       return res.status(401).json({ error: "Invalid username or password." });
     }
 
