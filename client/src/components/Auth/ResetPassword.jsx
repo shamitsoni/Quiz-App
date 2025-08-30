@@ -5,19 +5,36 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 function ResetPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [step, setStep] = useState("email");
+  const [code, setCode] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch(`${SERVER_URL}/api/reset-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ email: email }),
     });
     const data = await res.json();
     if (data.success) {
-      setMessage("One-time reset code sent to your email.");
+      setStep("code");
+    }
+    setMessage(data.message);
+  };
+
+  const handleCodeSubmit = async (e) => {
+    e.preventDefault();
+    const res = await fetch(`${SERVER_URL}/api/verify-reset-code`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, code: code }),
+    });
+    const data = await res.json();
+    setMessage(data.message);
+    if (data.success) {
+      console.log("Code valid");
     } else {
-      setMessage("Invalid email");
+      console.log("Wrong code");
     }
   };
 
@@ -35,6 +52,20 @@ function ResetPassword() {
         <button>Verify</button>
       </form>
       {message && <p>{message}</p>}
+
+      {step === "code" && (
+        <form onSubmit={handleCodeSubmit}>
+          <input
+            name="code"
+            type="text"
+            placeholder="Enter Code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            required
+          />
+          <button>Verify</button>
+        </form>
+      )}
     </>
   );
 }

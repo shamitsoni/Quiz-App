@@ -22,6 +22,7 @@ const pool = new Pool({
   port: process.env.PGPORT,
 });
 const SALT_ROUNDS = 10;
+const resetCodes = {};
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -90,11 +91,17 @@ app.post("/api/reset-password", async (req, res) => {
       email,
     ]);
     if (result.rows.length === 0) {
-      return res.json({ success: false, message: "Invalid" });
+      return res.json({ success: false, message: "Email address not found." });
     }
 
     // Generate 6 digit code
     const code = crypto.randomInt(100000, 999999).toString();
+
+    // Store the code and expiration time with the user email
+    resetCodes[email] = {
+      code: code,
+      expires: Date.now() + 2 * 60 * 1000, // Code expires in 2 minutes from creation
+    };
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -113,12 +120,32 @@ app.post("/api/reset-password", async (req, res) => {
 
     return res.json({
       success: true,
-      message: "Valid",
+      message: "One-time reset code has been sent to your inbox.",
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({ success: false, message: "Server error." });
   }
+});
+
+// Verify code for password reset
+app.post("/api/verify-reset-code", async (req, res) => {
+  const { email, code } = req.body;
+  const entry = resetCodes[email];
+  if (!entry) {
+    return res.json({
+      success: false,
+      message: "No code found for this email.",
+    });
+  }
+  if (Date.now() > entry.expires || entry.code !== code) {
+    return res.json({ success: false, message: "Code is invalid or expired." });
+  }
+  delete resetCodes[email];
+  res.json({
+    success: true,
+    message: "Code has been verified. Proceed to password reset.",
+  });
 });
 
 // Retrieve stats by user ID
