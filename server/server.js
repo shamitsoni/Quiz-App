@@ -3,6 +3,8 @@ import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
+import nodemailer from "nodemailer";
 import { Pool } from "pg";
 
 dotenv.config();
@@ -88,10 +90,31 @@ app.post("/api/reset-password", async (req, res) => {
       email,
     ]);
     if (result.rows.length === 0) {
-      return res.json({ success: false, message: "Email was not found" });
-    } else {
-      return res.json({ success: true, message: "Email was found." });
+      return res.json({ success: false, message: "Invalid" });
     }
+
+    // Generate 6 digit code
+    const code = crypto.randomInt(100000, 999999).toString();
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Trivia App | Reset Password",
+      text: `Your password reset code is: ${code}`,
+    });
+
+    return res.json({
+      success: true,
+      message: "Valid",
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ success: false, message: "Server error." });

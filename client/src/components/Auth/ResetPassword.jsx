@@ -15,7 +15,7 @@ function ResetPassword() {
     });
     const data = await res.json();
     if (data.success) {
-      setMessage("Email verified");
+      setMessage("One-time reset code sent to your email.");
     } else {
       setMessage("Invalid email");
     }
