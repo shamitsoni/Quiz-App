@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -7,6 +8,7 @@ function VerifyDetails() {
   const [message, setMessage] = useState("");
   const [step, setStep] = useState("email");
   const [code, setCode] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ function VerifyDetails() {
     setMessage(data.message);
     if (data.success) {
       console.log("Code valid");
+      navigate("/reset-password", { state: { email } });
     } else {
       console.log("Wrong code");
     }

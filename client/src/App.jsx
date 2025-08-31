@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import Stats from "./components/Stats/Stats";
 import ReviewQuiz from "./components/Quiz/ReviewQuiz";
 import VerifyDetails from "./components/Auth/VerifyDetails";
+import ResetPassword from "./components/Auth/ResetPassword";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -49,7 +50,8 @@ function App() {
       <Route path="/" element={<Home user={user} handleLogOut={logout} />} />
       <Route path="/login" element={<Login setUser={setUser} />} />
       <Route path="/sign-up" element={<SignUp />} />
-      <Route path="/verify-details" element={<VerifyDetails />}></Route>
+      <Route path="/verify-details" element={<VerifyDetails />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route
         path="/dashboard"
         element={
