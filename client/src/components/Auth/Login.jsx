@@ -72,7 +72,7 @@ function Login({ setUser }) {
         <a href="/sign-up" className="help-link">
           Create an account
         </a>
-        <a href="/reset-password" className="help-link">
+        <a href="/verify-details" className="help-link">
           Forgot password?
         </a>
       </div>

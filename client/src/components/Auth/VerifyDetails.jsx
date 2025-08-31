@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-function ResetPassword() {
+function VerifyDetails() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [step, setStep] = useState("email");
@@ -10,7 +10,7 @@ function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(`${SERVER_URL}/api/reset-password`, {
+    const res = await fetch(`${SERVER_URL}/api/verify-email`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email }),
@@ -24,7 +24,7 @@ function ResetPassword() {
 
   const handleCodeSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(`${SERVER_URL}/api/verify-reset-code`, {
+    const res = await fetch(`${SERVER_URL}/api/verify-code`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email, code: code }),
@@ -70,4 +70,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default VerifyDetails;

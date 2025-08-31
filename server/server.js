@@ -84,7 +84,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 // Verify email when resetting password
-app.post("/api/reset-password", async (req, res) => {
+app.post("/api/verify-email", async (req, res) => {
   const { email } = req.body;
   try {
     const result = await pool.query("SELECT id FROM users WHERE email = $1", [
@@ -129,7 +129,7 @@ app.post("/api/reset-password", async (req, res) => {
 });
 
 // Verify code for password reset
-app.post("/api/verify-reset-code", async (req, res) => {
+app.post("/api/verify-code", async (req, res) => {
   const { email, code } = req.body;
   const entry = resetCodes[email];
   if (!entry) {
