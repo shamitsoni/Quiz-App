@@ -148,6 +148,32 @@ app.post("/api/verify-code", async (req, res) => {
   });
 });
 
+// Reset password
+app.post("/api/reset-password", async (req, res) => {
+  const { email, password, passwordConfirm } = req.body;
+  try {
+    if (password !== passwordConfirm) {
+      return res.status(401).json({ error: "Passwords must match." });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+    const result = await pool.query(
+      "UPDATE users SET password = $1 WHERE email = $2",
+      [hashedPassword, email]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Email not found." });
+    }
+
+    res.json({ message: "Password successfully changed." });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Password reset failed." });
+  }
+});
+
 // Retrieve stats by user ID
 app.get("/api/stats/:userId", async (req, res) => {
   const { userId } = req.params;
