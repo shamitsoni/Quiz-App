@@ -1,3 +1,8 @@
+a {
+  text-decoration: none;
+  color: #1976d2;
+}
+
 /* Quiz page styling */
 .app-container {
   display: flex;

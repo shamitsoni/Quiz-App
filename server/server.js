@@ -277,7 +277,9 @@ app.get("/api/completed-quizzes/:userId/:quizId", async (req, res) => {
       [userId, quizId]
     );
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Quiz not found." });
+      return res
+        .status(404)
+        .json({ error: "Quiz was not found under your account." });
     }
     res.json(result.rows[0]);
   } catch (err) {
