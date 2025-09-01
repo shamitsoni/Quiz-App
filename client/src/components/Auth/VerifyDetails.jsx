@@ -35,7 +35,7 @@ function VerifyDetails() {
     setMessage(data.message);
     if (data.success) {
       console.log("Code valid");
-      navigate("/reset-password", { state: { email } });
+      navigate("/reset-password", { state: { email, verified: true } });
     } else {
       console.log("Wrong code");
     }

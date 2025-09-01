@@ -13,11 +13,17 @@ function ResetPassword() {
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
+  const verified = location.state?.verified;
   const [form, setForm] = useState({
     email,
     password: "",
     passwordConfirm: "",
   });
+
+  if (!verified) {
+    navigate("/verify-details");
+    return null;
+  }
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
