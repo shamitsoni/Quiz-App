@@ -47,6 +47,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="*" element={<NotFound />} />
       <Route path="/" element={<Home user={user} handleLogOut={logout} />} />
       <Route path="/login" element={<Login setUser={setUser} />} />
       <Route path="/sign-up" element={<SignUp />} />
@@ -86,6 +87,18 @@ function App() {
         }
       />
     </Routes>
+  );
+}
+
+function NotFound() {
+  return (
+    <div>
+      <h1>404 - Page Not Found</h1>
+      <p>The page you are looking for doesn't exist.</p>
+      <a style={{ textDecoration: "none", color: "#1976d2" }} href="/">
+        Go Home
+      </a>
+    </div>
   );
 }
 
