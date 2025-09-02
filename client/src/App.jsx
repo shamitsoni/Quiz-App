@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) {
+    if (storedUser && storedUser !== "undefined") {
       setUser(JSON.parse(storedUser));
     }
     setLoadingUser(false);
