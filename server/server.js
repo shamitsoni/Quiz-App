@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 const port = 5000;
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:3000"],
 };
 
 const pool = new Pool({
