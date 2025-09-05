@@ -19,6 +19,8 @@ services:
       - PGHOST=postgres
       - PGDATABASE=quiz_app
       - PGPORT=5432
+      - EMAIL_USER=enter-email
+      - EMAIL_PASS=enter-pass
     depends_on:
       - postgres
 
