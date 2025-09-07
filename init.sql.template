@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: completed_quizzes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: completed_quizzes; Type: TABLE; Schema: public;
 --
 
 CREATE TABLE public.completed_quizzes (
@@ -36,10 +36,10 @@ CREATE TABLE public.completed_quizzes (
 );
 
 
-ALTER TABLE public.completed_quizzes OWNER TO postgres;
+ALTER TABLE public.completed_quizzes OWNER TO {{PGUSER}};
 
 --
--- Name: completed_quizzes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: completed_quizzes_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE public.completed_quizzes_id_seq
@@ -51,17 +51,17 @@ CREATE SEQUENCE public.completed_quizzes_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.completed_quizzes_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.completed_quizzes_id_seq OWNER TO {{PGUSER}};
 
 --
--- Name: completed_quizzes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: completed_quizzes_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE public.completed_quizzes_id_seq OWNED BY public.completed_quizzes.id;
 
 
 --
--- Name: stats; Type: TABLE; Schema: public; Owner: postgres
+-- Name: stats; Type: TABLE; Schema: public;
 --
 
 CREATE TABLE public.stats (
@@ -74,10 +74,10 @@ CREATE TABLE public.stats (
 );
 
 
-ALTER TABLE public.stats OWNER TO postgres;
+ALTER TABLE public.stats OWNER TO {{PGUSER}};
 
 --
--- Name: stats_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: stats_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE public.stats_id_seq
@@ -89,17 +89,17 @@ CREATE SEQUENCE public.stats_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.stats_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.stats_id_seq OWNER TO {{PGUSER}};
 
 --
--- Name: stats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: stats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; 
 --
 
 ALTER SEQUENCE public.stats_id_seq OWNED BY public.stats.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: postgres
+-- Name: users; Type: TABLE; Schema: public; 
 --
 
 CREATE TABLE public.users (
@@ -110,10 +110,10 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO postgres;
+ALTER TABLE public.users OWNER TO {{PGUSER}};
 
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public;
 --
 
 CREATE SEQUENCE public.users_id_seq
@@ -125,38 +125,38 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.users_id_seq OWNER TO {{PGUSER}};
 
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: completed_quizzes id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: completed_quizzes id; Type: DEFAULT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.completed_quizzes ALTER COLUMN id SET DEFAULT nextval('public.completed_quizzes_id_seq'::regclass);
 
 
 --
--- Name: stats id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: stats id; Type: DEFAULT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.stats ALTER COLUMN id SET DEFAULT nextval('public.stats_id_seq'::regclass);
 
 
 --
--- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: users id; Type: DEFAULT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
--- Name: completed_quizzes completed_quizzes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: completed_quizzes completed_quizzes_pkey; Type: CONSTRAINT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.completed_quizzes
@@ -164,7 +164,7 @@ ALTER TABLE ONLY public.completed_quizzes
 
 
 --
--- Name: stats stats_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: stats stats_pkey; Type: CONSTRAINT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.stats
@@ -172,7 +172,7 @@ ALTER TABLE ONLY public.stats
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.users
@@ -180,7 +180,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.users
@@ -188,7 +188,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: completed_quizzes completed_quizzes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: completed_quizzes completed_quizzes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.completed_quizzes
@@ -196,7 +196,7 @@ ALTER TABLE ONLY public.completed_quizzes
 
 
 --
--- Name: stats stats_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: stats stats_user_id_fkey; Type: FK CONSTRAINT; Schema: public; 
 --
 
 ALTER TABLE ONLY public.stats
