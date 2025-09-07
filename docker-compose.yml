@@ -14,22 +14,22 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - PGUSER=postgres
-      - PGPASSWORD=1234
-      - PGHOST=postgres
-      - PGDATABASE=quiz_app
-      - PGPORT=5432
-      - EMAIL_USER=enter-email
-      - EMAIL_PASS=enter-pass
+      - PGUSER=${PGUSER}
+      - PGPASSWORD=${PGPASSWORD}
+      - PGHOST=${PGHOST}
+      - PGDATABASE=${PGDATABASE}
+      - PGPORT=${PGPORT}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
     depends_on:
       - postgres
 
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: quiz_app
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
     ports:
       - "5432:5432"
     volumes:
