@@ -37,29 +37,40 @@ flowchart TD
 ## Setup / Installation (Local Development)
 
 ### Prerequisites
-- Install [Docker Desktop](https://www.docker.com/products/docker-desktop) (Windows/macOS) **or** Docker Engine + Docker Compose on Linux.
-- Make sure Docker Desktop (or Docker Engine) is **running** before starting the app.
+- **Docker**:
+    - [Windows/macOS] Install Docker Desktop (https://www.docker.com/products/docker-desktop)
+    - [Linux] Install Docker Engine + Docker Compose
+    - Make sure Docker Desktop (or Docker Engine) is **running** before starting the app
+- **Command-Line**
+    - All setup commands are designed for **Bash**
+    - [Windows] Use **Git Bash** - included with Git for Windows (https://git-scm.com/download/win)
 
-1. Clone the repo:
+### Get Started
+1. Clone the repo
    ```bash
    git clone https://github.com/shamitsoni/quiz-app.git
-   ```
-2. Navigate into the directory:
-   ```bash
    cd quiz-app
    ```
-3. Configure Environment Variables
-   - Open the .env file in the root of the project
-   - Configure postgres database details
-   - (Optional) Add email details to configure Nodemailer and use reset password feature
-
-4. Build and run using Docker Compose
+2. Configure environment variables
+   Copy the provided template and update with your database credentials and (optional) email service settings
+   ```bash
+   cp .env.example .env
+   ```
+4. Generate database schemas
+   Run the initialization script, to create init.sql and set the database owner with the PGUSER value from your .env
+   ```bash
+   ./gen-init.sh
+   ```
+5. Start services with Docker Compose
+   Build all containers (frontend, backend, and Postgres) and start the stack. For subsequent starts, exclude the --build flag
    ```bash
    docker-compose up --build
    ```
-5. Access local servers
-   - frontend: http://localhost:3000
-   - backend: http://localhost:5000
+   - For subsequent runs, you may omit the --build flag unless changes were made to Dockerfiles.
+
+6. Access local servers
+   - Frontend: http://localhost:3000
+   - Backend: http://localhost:5000
 
 
   
