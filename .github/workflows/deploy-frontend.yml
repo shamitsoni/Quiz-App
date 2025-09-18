@@ -20,15 +20,18 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./client
 
       - name: Create production .env file
         run: |
           echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env.production
         env:
           VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
+        working-directory: ./client
 
       - name: Build Vite app
         run: npm run build
+        working-directory: ./client
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
