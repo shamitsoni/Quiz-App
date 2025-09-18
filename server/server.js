@@ -6,13 +6,22 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import { Pool } from "pg";
+import { default as serverlessExpress } from "@vendia/serverless-express";
 
 dotenv.config();
 const app = express();
-const port = 5000;
-const corsOptions = {
-  origin: ["http://localhost:3000"],
-};
+
+const isLambda = process.env.IS_LAMBDA_ENV;
+const corsOptions = isLambda
+  ? {
+      origin: [process.env.CORS_ORIGIN],
+      methods: ["GET", "POST", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    }
+  : { origin: ["http://localhost:3000"] };
+
+app.use(corsOptions);
+app.use(express.json());
 
 const pool = new Pool({
   user: process.env.PGUSER,
@@ -23,9 +32,6 @@ const pool = new Pool({
 });
 const SALT_ROUNDS = 10;
 const resetCodes = {};
-
-app.use(cors(corsOptions));
-app.use(express.json());
 
 // Retrieve questions from the OpenTDB API
 app.get("/api/questions", async (req, res) => {
@@ -288,6 +294,19 @@ app.get("/api/completed-quizzes/:userId/:quizId", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}.`);
+// Handle unrecognized routes
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
 });
+
+let handler;
+
+if (isLambda) {
+  handler = serverlessExpress({ app });
+} else {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}.`);
+  });
+}
+
+export { handler };
