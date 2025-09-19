@@ -3,7 +3,7 @@ name: Deploy Backend to Lambda
 on:
   push:
     branches:
-      - feature/test-actions
+      - master
 
 jobs:
   deploy-backend:
@@ -25,7 +25,7 @@ jobs:
       - name: Zip backend files
         run: |
           cd server
-          zip -r ../lambda.zip . -x "Dockerfile" ".dockerfile"
+          zip -r ../lambda.zip . -x "Dockerfile" ".dockerignore"
           cd ..
 
       - name: Configure AWS Credentials
