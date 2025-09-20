@@ -15,7 +15,14 @@ function Quiz({ user, stats, setStats, quizData, reviewMode = false }) {
   const [liveTime, setLiveTime] = useState(0);
   const [liveAnswered, setLiveAnswered] = useState({});
   const [liveSelectedAnswer, setLiveSelectedAnswer] = useState(null);
-  const { loading, error, fetchAPI, array: triviaArray } = useTrivia();
+  const {
+    loading,
+    error,
+    fetchAPI,
+    array: triviaArray,
+  } = reviewMode
+    ? { loading: false, error: null, fetchAPI: () => {}, array: [] }
+    : useTrivia();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
   const [timerActive, setTimerActive] = useState(true);
