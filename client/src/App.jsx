@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./components/Home/Home";
+import AdminDashboard from "./components/Home/AdminDashboard";
 import Dashboard from "./components/Home/Dashboard";
 import Quiz from "./components/Quiz/Quiz";
 import Login from "./components/Auth/Login";
@@ -48,6 +49,7 @@ function App() {
   return (
     <Routes>
       <Route path="*" element={<NotFound />} />
+      <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/" element={<Home user={user} handleLogOut={logout} />} />
       <Route path="/login" element={<Login setUser={setUser} />} />
       <Route path="/sign-up" element={<SignUp />} />
@@ -77,7 +79,6 @@ function App() {
           </ProtectedRoute>
         }
       />
-
       <Route
         path="/review/:quizId"
         element={

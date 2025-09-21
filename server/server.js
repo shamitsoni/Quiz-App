@@ -18,7 +18,7 @@ const corsOptions = isLambda
       methods: ["GET", "POST", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization"],
     }
-  : { origin: ["http://localhost:3000"] };
+  : { origin: ["http://localhost:5173", "http://localhost:3000"] };
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -291,6 +291,17 @@ app.get("/api/completed-quizzes/:userId/:quizId", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch quiz." });
+  }
+});
+
+app.get("/api/admin/users", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT id, username from users");
+    return res.json(result.rows);
+  } catch (err) {
+    res.json({
+      error: "Error...",
+    });
   }
 });
 
