@@ -294,6 +294,9 @@ app.get("/api/completed-quizzes/:userId/:quizId", async (req, res) => {
   }
 });
 
+// ADMIN endpoints !
+
+// List all registered users
 app.get("/api/admin/users", async (req, res) => {
   try {
     const result = await pool.query("SELECT id, username from users");
@@ -303,6 +306,15 @@ app.get("/api/admin/users", async (req, res) => {
       error: "Error...",
     });
   }
+});
+
+// Retrieve a specific user by ID
+app.get("/api/admin/users/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const result = await pool.query("SELECT * FROM users WHERE id = $1", [
+    userId,
+  ]);
+  res.json(result.rows[0]);
 });
 
 // Handle unrecognized routes

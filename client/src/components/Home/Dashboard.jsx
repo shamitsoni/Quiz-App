@@ -1,14 +1,24 @@
 import "./Home.css";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import RecentResult from "../Quiz/RecentResult";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-function Dashboard({ user, handleLogOut }) {
+function Dashboard({ user, handleLogOut, adminView }) {
+  const { userId } = useParams();
+  const [viewUser, setViewUser] = useState(user);
   const [recentQuizzes, setRecentQuizzes] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (adminView && userId) {
+      fetch(`${SERVER_URL}/api/admin/users/${userId}`)
+        .then((res) => res.json())
+        .then((data) => setViewUser(data));
+    }
+  }, [adminView, userId]);
 
   const handleViewQuiz = (quizId) => {
     navigate(`/review/${quizId}`);
@@ -19,14 +29,20 @@ function Dashboard({ user, handleLogOut }) {
   }, []);
 
   useEffect(() => {
-    fetch(`${SERVER_URL}/api/completed-quizzes/${user.id}`)
-      .then((res) => res.json())
-      .then((data) => setRecentQuizzes(data));
-  }, [user.id]);
+    if (viewUser && viewUser.id) {
+      fetch(`${SERVER_URL}/api/completed-quizzes/${viewUser.id}`)
+        .then((res) => res.json())
+        .then((data) => setRecentQuizzes(data));
+    }
+  }, [viewUser?.id]);
 
   return (
     <>
-      <NavBar user={user} handleLogOut={handleLogOut} location="dashboard" />
+      <NavBar
+        user={viewUser}
+        handleLogOut={handleLogOut}
+        location="dashboard"
+      />
       <main className="dashboard-grid">
         <section className="dashboard-btns">
           <Link to="/quiz">
