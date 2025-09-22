@@ -21,7 +21,7 @@ function AdminUserDashboard() {
   }, [userId]);
 
   const handleViewQuiz = (quizId) => {
-    navigate(`/review/${quizId}`);
+    navigate(`/review/${quizId}`, { state: { userId: viewUser.id } });
   };
 
   useEffect(() => {

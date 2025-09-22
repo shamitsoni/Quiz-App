@@ -1,16 +1,18 @@
 import Quiz from "./Quiz";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function ReviewQuiz({ user }) {
   const { quizId } = useParams();
+  const location = useLocation();
   const [quizData, setQuizData] = useState(null);
   const [error, setError] = useState("");
+  const userId = location.state?.userId || user.id;
 
   useEffect(() => {
-    fetch(`${SERVER_URL}/api/completed-quizzes/${user.id}/${quizId}`)
+    fetch(`${SERVER_URL}/api/completed-quizzes/${userId}/${quizId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
@@ -20,7 +22,7 @@ function ReviewQuiz({ user }) {
         }
       })
       .catch(() => setError("Failed to load quiz."));
-  }, [user.id, quizId]);
+  }, [userId, quizId]);
 
   if (error) {
     return (
