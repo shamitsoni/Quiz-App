@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./components/Home/Home";
 import AdminDashboard from "./components/Home/AdminDashboard";
+import AdminUserDashboard from "./components/Home/AdminUserDashboard";
 import Dashboard from "./components/Home/Dashboard";
 import Quiz from "./components/Quiz/Quiz";
 import Login from "./components/Auth/Login";
@@ -50,10 +51,7 @@ function App() {
     <Routes>
       <Route path="*" element={<NotFound />} />
       <Route path="/admin" element={<AdminDashboard />} />
-      <Route
-        path="/admin/user/:userId"
-        element={<Dashboard adminView={true} />}
-      />
+      <Route path="/admin/user/:userId" element={<AdminUserDashboard />} />
       <Route path="/" element={<Home user={user} handleLogOut={logout} />} />
       <Route path="/login" element={<Login setUser={setUser} />} />
       <Route path="/sign-up" element={<SignUp />} />
