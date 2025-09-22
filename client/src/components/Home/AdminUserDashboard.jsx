@@ -38,7 +38,7 @@ function AdminUserDashboard() {
 
   return (
     <>
-      <NavBar user={viewUser} location="dashboard" />
+      <NavBar user={viewUser} location="adminUserDashboard" />
       <main className="dashboard-grid">
         <section className="dashboard-btns">
           <Link to="/stats">
