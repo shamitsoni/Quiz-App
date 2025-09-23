@@ -50,6 +50,7 @@
 .content-btn {
   font-size: 1.1rem;
   padding: 12px 32px;
+  max-height: 50px;
   border-radius: 8px;
   background: #4794e0;
   color: #fff;

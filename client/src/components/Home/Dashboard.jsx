@@ -1,6 +1,6 @@
 import "./Home.css";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import RecentResult from "../Quiz/RecentResult";
 
@@ -29,12 +29,13 @@ function Dashboard({ user, handleLogOut }) {
       <NavBar user={user} handleLogOut={handleLogOut} location="dashboard" />
       <main className="dashboard-grid">
         <section className="dashboard-btns">
-          <Link to="/quiz">
-            <button className="content-btn">Play</button>
-          </Link>
-          <Link to="/stats">
-            <button className="content-btn">Stats</button>
-          </Link>
+          <button className="content-btn" onClick={() => navigate("/quiz")}>
+            Play
+          </button>
+
+          <button className="content-btn" onClick={() => navigate("/stats")}>
+            Stats
+          </button>
         </section>
 
         <section className="recent-results-section">

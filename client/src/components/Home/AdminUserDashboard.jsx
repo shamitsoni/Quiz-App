@@ -1,6 +1,6 @@
 import "./Home.css";
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import RecentResult from "../Quiz/RecentResult";
 
@@ -24,10 +24,6 @@ function AdminUserDashboard() {
     navigate(`/review/${quizId}`, { state: { userId: viewUser.id } });
   };
 
-  const handleViewStats = () => {
-    navigate(`/admin/user/${viewUser.id}/stats`);
-  };
-
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
@@ -45,7 +41,10 @@ function AdminUserDashboard() {
       <NavBar user={viewUser} location="adminUserDashboard" />
       <main className="dashboard-grid">
         <section className="dashboard-btns">
-          <button onClick={handleViewStats} className="content-btn">
+          <button
+            className="content-btn"
+            onClick={() => navigate(`/admin/user/${viewUser.id}/stats`)}
+          >
             Stats
           </button>
         </section>
