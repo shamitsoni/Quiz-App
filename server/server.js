@@ -81,7 +81,7 @@ app.post("/api/login", async (req, res) => {
 
     res.json({
       message: "Login successful!",
-      user: { id: user.id, username: user.username },
+      user: { id: user.id, username: user.username, is_admin: user.is_admin },
     });
   } catch (err) {
     console.log(err);

@@ -50,11 +50,29 @@ function App() {
   return (
     <Routes>
       <Route path="*" element={<NotFound />} />
-      <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/admin/user/:userId" element={<AdminUserDashboard />} />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute user={user} redirectTo={"/"} adminRoute={true}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/user/:userId"
+        element={
+          <ProtectedRoute user={user} redirectTo={"/"} adminRoute={true}>
+            <AdminUserDashboard />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/admin/user/:userId/stats"
-        element={<Stats adminView={true} />}
+        element={
+          <ProtectedRoute user={user} redirectTo={"/"} adminRoute={true}>
+            <Stats adminView={true} />
+          </ProtectedRoute>
+        }
       />
       <Route path="/" element={<Home user={user} handleLogOut={logout} />} />
       <Route path="/login" element={<Login setUser={setUser} />} />
