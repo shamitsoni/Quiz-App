@@ -296,8 +296,29 @@ app.get("/api/completed-quizzes/:userId/:quizId", async (req, res) => {
 
 // ADMIN endpoints !
 
+// Middleware to check for admin access
+async function requireAdmin(req, res, next) {
+  // Require a user id to check against
+  const userId = req.headers["x-user-id"];
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized: No user ID provided" });
+  }
+  try {
+    const result = await pool.query(
+      "SELECT is_admin FROM users WHERE id = $1",
+      [userId]
+    );
+    if (!result.rows[0].is_admin) {
+      return res.status(403).json({ error: "Forbidden: Admins only" });
+    }
+    next();
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+}
+
 // List all registered users
-app.get("/api/admin/users", async (req, res) => {
+app.get("/api/admin/users", requireAdmin, async (req, res) => {
   try {
     const result = await pool.query("SELECT id, username from users");
     return res.json(result.rows);
@@ -309,7 +330,7 @@ app.get("/api/admin/users", async (req, res) => {
 });
 
 // Retrieve a specific user by ID
-app.get("/api/admin/users/:userId", async (req, res) => {
+app.get("/api/admin/users/:userId", requireAdmin, async (req, res) => {
   const { userId } = req.params;
   const result = await pool.query("SELECT * FROM users WHERE id = $1", [
     userId,

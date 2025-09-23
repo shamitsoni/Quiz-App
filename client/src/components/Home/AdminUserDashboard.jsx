@@ -6,7 +6,7 @@ import RecentResult from "../Quiz/RecentResult";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-function AdminUserDashboard() {
+function AdminUserDashboard({ user }) {
   const { userId } = useParams();
   const [viewUser, setViewUser] = useState();
   const [recentQuizzes, setRecentQuizzes] = useState([]);
@@ -14,7 +14,11 @@ function AdminUserDashboard() {
 
   useEffect(() => {
     if (userId) {
-      fetch(`${SERVER_URL}/api/admin/users/${userId}`)
+      fetch(`${SERVER_URL}/api/admin/users/${userId}`, {
+        headers: {
+          "x-user-id": user.id,
+        },
+      })
         .then((res) => res.json())
         .then((data) => setViewUser(data));
     }

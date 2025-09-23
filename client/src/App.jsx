@@ -54,7 +54,7 @@ function App() {
         path="/admin"
         element={
           <ProtectedRoute user={user} redirectTo={"/"} adminRoute={true}>
-            <AdminDashboard />
+            <AdminDashboard user={user} />
           </ProtectedRoute>
         }
       />
@@ -62,7 +62,7 @@ function App() {
         path="/admin/user/:userId"
         element={
           <ProtectedRoute user={user} redirectTo={"/"} adminRoute={true}>
-            <AdminUserDashboard />
+            <AdminUserDashboard user={user} />
           </ProtectedRoute>
         }
       />
@@ -70,7 +70,7 @@ function App() {
         path="/admin/user/:userId/stats"
         element={
           <ProtectedRoute user={user} redirectTo={"/"} adminRoute={true}>
-            <Stats adminView={true} />
+            <Stats user={user} adminView={true} />
           </ProtectedRoute>
         }
       />

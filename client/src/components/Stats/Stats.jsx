@@ -12,7 +12,11 @@ function Stats({ user, stats, adminView }) {
 
   useEffect(() => {
     if (userId) {
-      fetch(`${SERVER_URL}/api/admin/users/${userId}`)
+      fetch(`${SERVER_URL}/api/admin/users/${userId}`, {
+        headers: {
+          "x-user-id": user.id,
+        },
+      })
         .then((res) => res.json())
         .then((data) => setCurrUser(data));
     }

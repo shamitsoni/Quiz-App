@@ -3,12 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-function AdminDashboard() {
+function AdminDashboard({ user }) {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${SERVER_URL}/api/admin/users`)
+    fetch(`${SERVER_URL}/api/admin/users`, {
+      headers: {
+        "x-user-id": user.id,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
