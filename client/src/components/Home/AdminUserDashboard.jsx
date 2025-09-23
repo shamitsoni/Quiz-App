@@ -24,6 +24,10 @@ function AdminUserDashboard() {
     navigate(`/review/${quizId}`, { state: { userId: viewUser.id } });
   };
 
+  const handleViewStats = () => {
+    navigate(`/admin/user/${viewUser.id}/stats`);
+  };
+
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
@@ -41,9 +45,9 @@ function AdminUserDashboard() {
       <NavBar user={viewUser} location="adminUserDashboard" />
       <main className="dashboard-grid">
         <section className="dashboard-btns">
-          <Link to="/stats">
-            <button className="content-btn">Stats</button>
-          </Link>
+          <button onClick={handleViewStats} className="content-btn">
+            Stats
+          </button>
         </section>
 
         <section className="recent-results-section">

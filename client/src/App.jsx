@@ -52,6 +52,10 @@ function App() {
       <Route path="*" element={<NotFound />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/user/:userId" element={<AdminUserDashboard />} />
+      <Route
+        path="/admin/user/:userId/stats"
+        element={<Stats adminView={true} />}
+      />
       <Route path="/" element={<Home user={user} handleLogOut={logout} />} />
       <Route path="/login" element={<Login setUser={setUser} />} />
       <Route path="/sign-up" element={<SignUp />} />
