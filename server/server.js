@@ -338,6 +338,20 @@ app.get("/api/admin/users/:userId", requireAdmin, async (req, res) => {
   res.json(result.rows[0]);
 });
 
+// Lock a user, preventing them from logging in
+app.post("/api/admin/users/:userId/lock", requireAdmin, async (req, res) => {
+  const { userId } = req.params;
+  await pool.query("UPDATE users SET locked = TRUE WHERE id = $1", [userId]);
+  res.json({ message: "User has been locked." });
+});
+
+// Unlock a user, allowing them to log in
+app.post("/api/admin/users/:userId/unlock", requireAdmin, async (req, res) => {
+  const { userId } = req.params;
+  await pool.query("UPDATE users SET locked = FALSE WHERE id = $1", [userId]);
+  res.json({ message: "User has been unlocked." });
+});
+
 // Handle unrecognized routes
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
