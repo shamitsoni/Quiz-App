@@ -79,6 +79,14 @@ app.post("/api/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid username or password." });
     }
 
+    if (user.locked) {
+      return res
+        .status(403)
+        .json({
+          error: "Your account is locked. Please contact an admin to resolve.",
+        });
+    }
+
     res.json({
       message: "Login successful!",
       user: { id: user.id, username: user.username, is_admin: user.is_admin },
