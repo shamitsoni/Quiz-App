@@ -54,7 +54,7 @@ function App() {
         path="/admin"
         element={
           <ProtectedRoute user={user} redirectTo={"/"} adminRoute={true}>
-            <AdminDashboard user={user} />
+            <AdminDashboard admin={user} />
           </ProtectedRoute>
         }
       />
