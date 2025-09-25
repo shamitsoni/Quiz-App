@@ -45,19 +45,34 @@ function AdminDashboard({ admin }) {
     <>
       <h1>Welcome, Admin.</h1>
       <h2>Registered Users:</h2>
-      {users.map((user) => {
-        return (
-          <div key={user.id} style={{ display: "flex", gap: "50px" }}>
-            <div>{user.username}</div>
-            <button onClick={() => viewUserDashboard(user)}>
-              View Dashboard
-            </button>
-            <button onClick={() => toggleLock(user)}>
-              {user.locked ? "Unlock" : "Lock"}
-            </button>
-          </div>
-        );
-      })}
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Dashboard</th>
+            <th>Manage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => {
+            return (
+              <tr key={user.id}>
+                <td>{user.username}</td>
+                <td>
+                  <button onClick={() => viewUserDashboard(user)}>
+                    View Dashboard
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => toggleLock(user)}>
+                    {user.locked ? "Unlock" : "Lock"}
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 }
