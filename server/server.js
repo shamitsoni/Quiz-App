@@ -80,16 +80,19 @@ app.post("/api/login", async (req, res) => {
     }
 
     if (user.locked) {
-      return res
-        .status(403)
-        .json({
-          error: "Your account is locked. Please contact an admin to resolve.",
-        });
+      return res.status(403).json({
+        error: "Your account is locked. Please contact an admin to resolve.",
+      });
     }
 
     res.json({
       message: "Login successful!",
-      user: { id: user.id, username: user.username, is_admin: user.is_admin },
+      user: {
+        id: user.id,
+        username: user.username,
+        is_admin: user.is_admin,
+        locked: user.locked,
+      },
     });
   } catch (err) {
     console.log(err);
@@ -328,7 +331,7 @@ async function requireAdmin(req, res, next) {
 // List all registered users
 app.get("/api/admin/users", requireAdmin, async (req, res) => {
   try {
-    const result = await pool.query("SELECT id, username from users");
+    const result = await pool.query("SELECT id, username, locked from users");
     return res.json(result.rows);
   } catch (err) {
     res.json({
