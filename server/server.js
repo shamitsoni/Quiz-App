@@ -331,7 +331,9 @@ async function requireAdmin(req, res, next) {
 // List all registered users
 app.get("/api/admin/users", requireAdmin, async (req, res) => {
   try {
-    const result = await pool.query("SELECT id, username, locked from users");
+    const result = await pool.query(
+      "SELECT id, username, locked from users WHERE is_admin = FALSE"
+    );
     return res.json(result.rows);
   } catch (err) {
     res.json({
@@ -352,6 +354,14 @@ app.get("/api/admin/users/:userId", requireAdmin, async (req, res) => {
 // Lock a user, preventing them from logging in
 app.post("/api/admin/users/:userId/lock", requireAdmin, async (req, res) => {
   const { userId } = req.params;
+  const result = await pool.query("SELECT is_admin FROM users WHERE id = $1", [
+    userId,
+  ]);
+
+  if (result.rows[0]?.is_admin) {
+    return res.status(403).json({ error: "Insufficient permissions." });
+  }
+
   await pool.query("UPDATE users SET locked = TRUE WHERE id = $1", [userId]);
   res.json({ message: "User has been locked." });
 });
