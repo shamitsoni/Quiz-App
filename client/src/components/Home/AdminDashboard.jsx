@@ -1,3 +1,4 @@
+import "./Admin.css";
 import { useState, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -45,7 +46,7 @@ function AdminDashboard({ admin }) {
     <>
       <h1>Welcome, Admin.</h1>
       <h2>Registered Users:</h2>
-      <table>
+      <table className="user-table">
         <thead>
           <tr>
             <th>Username</th>
