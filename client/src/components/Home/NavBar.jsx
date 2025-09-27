@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function NavBar({ user, location, handleLogOut, onExit, quizCompleted }) {
   const titles = {
@@ -28,6 +28,8 @@ function NavBar({ user, location, handleLogOut, onExit, quizCompleted }) {
 }
 
 function getNavActions(user, location, handleLogOut, onExit, quizCompleted) {
+  const navigate = useNavigate();
+
   if (!user) {
     return (
       <>
@@ -48,8 +50,20 @@ function getNavActions(user, location, handleLogOut, onExit, quizCompleted) {
           Logout
         </button>
       );
+    case "adminDashboard":
+      return (
+        <>
+          <button onClick={() => navigate("/admin")} className="navbar-btn">
+            Admin
+          </button>
+          <button onClick={handleLogOut} className="navbar-btn">
+            Logout
+          </button>
+        </>
+      );
     case "adminUserDashboard":
       return;
+
     case "quiz":
       return (
         // If quiz is completed -> render simple button, else render button with exit confirmation
