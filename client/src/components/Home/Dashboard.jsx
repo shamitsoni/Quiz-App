@@ -14,6 +14,10 @@ function Dashboard({ user, handleLogOut }) {
     navigate(`/review/${quizId}`);
   };
 
+  const handleDownload = (quizId) => {
+    fetch(`${SERVER_URL}/api/quizzes/${quizId}/download`);
+  };
+
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
@@ -50,6 +54,7 @@ function Dashboard({ user, handleLogOut }) {
                 key={quiz.id}
                 quiz={quiz}
                 onViewQuiz={handleViewQuiz}
+                onDownload={handleDownload}
               />
             ))}
           </div>
