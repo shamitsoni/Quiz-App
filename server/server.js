@@ -261,6 +261,17 @@ app.get("/api/completed-quizzes/:userId", async (req, res) => {
   }
 });
 
+// Download a specific quiz
+app.get("/api/completed-quizzes/:quizId/download", async (req, res) => {
+  const { quizId } = req.params;
+  const result = await pool.query(
+    "SELECT * FROM completed_quizzes WHERE id = $1",
+    [quizId]
+  );
+
+  res.json(result.rows[0]);
+});
+
 // Save a quiz for a specific user
 app.post("/api/completed-quizzes/:userId", async (req, res) => {
   const { userId } = req.params;
