@@ -28,6 +28,22 @@ function AdminUserDashboard({ user }) {
     navigate(`/review/${quizId}`, { state: { userId: viewUser.id } });
   };
 
+  const handleDownload = async (quizId) => {
+    const res = await fetch(
+      `${SERVER_URL}/api/completed-quizzes/${quizId}/download`
+    );
+    const data = await res.json();
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `quiz-${quizId}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
@@ -63,6 +79,7 @@ function AdminUserDashboard({ user }) {
                 key={quiz.id}
                 quiz={quiz}
                 onViewQuiz={handleViewQuiz}
+                onDownload={handleDownload}
               />
             ))}
           </div>
