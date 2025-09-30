@@ -276,6 +276,10 @@ app.get("/api/completed-quizzes/:quizId/download", async (req, res) => {
 app.get("/api/completed-quizzes/:quizId/share", async (req, res) => {
   const { quizId } = req.params;
   const shareId = crypto.randomBytes(16).toString("hex");
+  await pool.query(
+    "INSERT INTO shared_quizzes (share_id, quiz_id) VALUES ($1, $2)",
+    [shareId, quizId]
+  );
   res.json({ id: shareId });
 });
 
