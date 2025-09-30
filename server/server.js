@@ -272,6 +272,13 @@ app.get("/api/completed-quizzes/:quizId/download", async (req, res) => {
   res.json(result.rows[0]);
 });
 
+// Share a specific quiz
+app.get("/api/completed-quizzes/:quizId/share", async (req, res) => {
+  const { quizId } = req.params;
+  const shareId = crypto.randomBytes(16).toString("hex");
+  res.json({ id: shareId });
+});
+
 // Save a quiz for a specific user
 app.post("/api/completed-quizzes/:userId", async (req, res) => {
   const { userId } = req.params;
