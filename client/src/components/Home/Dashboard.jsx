@@ -30,6 +30,16 @@ function Dashboard({ user, handleLogOut }) {
     URL.revokeObjectURL(url);
   };
 
+  const handleShare = async (quizId) => {
+    const res = await fetch(
+      `${SERVER_URL}/api/completed-quizzes/${quizId}/share`
+    );
+    const data = await res.json();
+    const shareId = data.id;
+    console.log(shareId);
+    navigate(`/share/${shareId}}`);
+  };
+
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
@@ -67,6 +77,7 @@ function Dashboard({ user, handleLogOut }) {
                 quiz={quiz}
                 onViewQuiz={handleViewQuiz}
                 onDownload={handleDownload}
+                onShare={handleShare}
               />
             ))}
           </div>

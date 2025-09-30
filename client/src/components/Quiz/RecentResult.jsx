@@ -1,4 +1,4 @@
-function RecentResult({ quiz, onViewQuiz, onDownload }) {
+function RecentResult({ quiz, onViewQuiz, onDownload, onShare }) {
   // Parse and format date string from DB
   const date = new Date(quiz.date_completed);
   const formattedDate = date.toLocaleDateString();
@@ -42,6 +42,10 @@ function RecentResult({ quiz, onViewQuiz, onDownload }) {
 
         <button onClick={() => onDownload(quiz.id)} className="view-btn">
           Download
+        </button>
+
+        <button onClick={() => onShare(quiz.id)} className="view-btn">
+          Share
         </button>
       </div>
     </div>
