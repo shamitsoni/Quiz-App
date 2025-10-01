@@ -10,6 +10,7 @@ import SignUp from "./components/Auth/SignUp";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import Stats from "./components/Stats/Stats";
 import ReviewQuiz from "./components/Quiz/ReviewQuiz";
+import ShareQuiz from "./components/Quiz/ShareQuiz";
 import VerifyDetails from "./components/Auth/VerifyDetails";
 import ResetPassword from "./components/Auth/ResetPassword";
 
@@ -111,6 +112,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="/share/:shareId" element={<ShareQuiz></ShareQuiz>} />
     </Routes>
   );
 }
