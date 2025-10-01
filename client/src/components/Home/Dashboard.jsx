@@ -36,8 +36,7 @@ function Dashboard({ user, handleLogOut }) {
     );
     const data = await res.json();
     const shareId = data.id;
-    console.log(shareId);
-    navigate(`/share/${shareId}}`);
+    navigate(`/share/${shareId}`);
   };
 
   useEffect(() => {

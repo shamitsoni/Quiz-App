@@ -272,7 +272,7 @@ app.get("/api/completed-quizzes/:quizId/download", async (req, res) => {
   res.json(result.rows[0]);
 });
 
-// Share a specific quiz
+// Generate a share id for a specific quiz
 app.get("/api/completed-quizzes/:quizId/share", async (req, res) => {
   const { quizId } = req.params;
   const shareId = crypto.randomBytes(16).toString("hex");
@@ -281,6 +281,23 @@ app.get("/api/completed-quizzes/:quizId/share", async (req, res) => {
     [shareId, quizId]
   );
   res.json({ id: shareId });
+});
+
+// Retrieve quiz by share id
+app.get("/api/shared/:shareId", async (req, res) => {
+  const { shareId } = req.params;
+  const result = await pool.query(
+    `SELECT * 
+    FROM shared_quizzes 
+    INNER JOIN completed_quizzes 
+    ON shared_quizzes.quiz_id = completed_quizzes.id 
+    WHERE shared_quizzes.share_id = $1`,
+    [shareId]
+  );
+  if (result.rows.length == 0) {
+    return res.status(404).json({ error: "Shared quiz not found." });
+  }
+  res.json(result.rows[0]);
 });
 
 // Save a quiz for a specific user
