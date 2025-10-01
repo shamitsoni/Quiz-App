@@ -17,10 +17,29 @@ function ShareQuiz() {
     return <div>Loading...</div>;
   }
 
+  const date = new Date(quiz.date_completed);
+  const formattedDate = date.toLocaleDateString();
+  const questions = quiz.questions;
+  const answers = quiz.user_answers;
+
   return (
     <>
-      <div>{quiz.id}</div>
-      <div>{quiz.score}</div>
+      <div>Quiz completed: {formattedDate} </div>
+      <div>Total Questions: {quiz.total_questions}</div>
+      <div>
+        Score: {quiz.score}/{quiz.total_questions}
+      </div>
+      <div>Time to complete: {quiz.time_spent}s</div>
+      <br />
+      <div>Questions:</div>
+      {questions.map((q, i) => {
+        return (
+          <div key={i}>
+            {q.answer === answers[i].selectedAnswer ? "✅" : "❌"}
+            {q.question}
+          </div>
+        );
+      })}
     </>
   );
 }
