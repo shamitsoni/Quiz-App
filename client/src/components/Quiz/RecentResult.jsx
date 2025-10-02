@@ -6,6 +6,7 @@ function RecentResult({ quiz, onViewQuiz, onDownload, onShare }) {
     hour: "2-digit",
     minute: "2-digit",
   });
+
   return (
     <div className="recent-quiz">
       <p>
@@ -45,7 +46,7 @@ function RecentResult({ quiz, onViewQuiz, onDownload, onShare }) {
         </button>
 
         <button onClick={() => onShare(quiz.id)} className="view-btn">
-          Share
+          Copy Share Link
         </button>
       </div>
     </div>

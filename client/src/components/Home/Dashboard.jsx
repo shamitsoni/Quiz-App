@@ -36,7 +36,8 @@ function Dashboard({ user, handleLogOut }) {
     );
     const data = await res.json();
     const shareId = data.id;
-    navigate(`/share/${shareId}`);
+    const url = `${window.location.origin}/share/${shareId}`;
+    navigator.clipboard.writeText(url);
   };
 
   useEffect(() => {
