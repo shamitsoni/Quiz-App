@@ -44,6 +44,15 @@ function AdminUserDashboard({ user }) {
     URL.revokeObjectURL(url);
   };
 
+  const handleShare = async (quizId) => {
+    const res = await fetch(
+      `${SERVER_URL}/api/completed-quizzes/${quizId}/share`
+    );
+    const data = await res.json();
+    const shareId = data.id;
+    navigate(`/share/${shareId}`);
+  };
+
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
@@ -80,6 +89,7 @@ function AdminUserDashboard({ user }) {
                 quiz={quiz}
                 onViewQuiz={handleViewQuiz}
                 onDownload={handleDownload}
+                onShare={handleShare}
               />
             ))}
           </div>
