@@ -56,11 +56,9 @@ function Dashboard({ user, handleLogOut }) {
       .then((data) => setRecentQuizzes(data));
   }, [user.id]);
 
-  const location = user.is_admin ? "adminDashboard" : "dashboard";
-
   return (
     <>
-      <NavBar user={user} handleLogOut={handleLogOut} location={location} />
+      <NavBar user={user} handleLogOut={handleLogOut} location="dashboard" />
       <main className="dashboard-grid">
         <section className="dashboard-btns">
           <button className="content-btn" onClick={() => navigate("/quiz")}>
