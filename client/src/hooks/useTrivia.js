@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export function useTrivia() {
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
+function useTrivia() {
   const [array, setArray] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +19,7 @@ export function useTrivia() {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get("http://localhost:5000/api/questions");
+      const response = await axios.get(`${SERVER_URL}/api/questions`);
       const questions = response.data.results.map((ques, index) => {
         const answerChoices = [
           ques.correct_answer,
@@ -51,3 +53,5 @@ export function useTrivia() {
 
   return { array, loading, error, fetchAPI };
 }
+
+export default useTrivia;
