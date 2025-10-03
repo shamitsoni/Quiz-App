@@ -8,6 +8,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function Dashboard({ user, handleLogOut }) {
   const [recentQuizzes, setRecentQuizzes] = useState([]);
+  const [shareUrls, setShareUrls] = useState({});
   const navigate = useNavigate();
 
   const handleViewQuiz = (quizId) => {
@@ -31,13 +32,18 @@ function Dashboard({ user, handleLogOut }) {
   };
 
   const handleShare = async (quizId) => {
-    const res = await fetch(
-      `${SERVER_URL}/api/completed-quizzes/${quizId}/share`
-    );
-    const data = await res.json();
-    const shareId = data.id;
-    const url = `${window.location.origin}/share/${shareId}`;
-    navigator.clipboard.writeText(url);
+    if (!shareUrls[quizId]) {
+      const res = await fetch(
+        `${SERVER_URL}/api/completed-quizzes/${quizId}/share`
+      );
+      const data = await res.json();
+      const shareId = data.id;
+      const url = `${window.location.origin}/share/${shareId}`;
+      setShareUrls((prev) => ({ ...prev, [quizId]: url }));
+      navigator.clipboard.writeText(url);
+    } else {
+      navigator.clipboard.writeText(shareUrls[quizId]);
+    }
   };
 
   useEffect(() => {
