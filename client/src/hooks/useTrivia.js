@@ -3,7 +3,7 @@ import axios from "axios";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-function useTrivia() {
+export function useTrivia() {
   const [array, setArray] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -53,5 +53,3 @@ function useTrivia() {
 
   return { array, loading, error, fetchAPI };
 }
-
-export default useTrivia;
