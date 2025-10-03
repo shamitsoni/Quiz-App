@@ -275,6 +275,14 @@ app.get("/api/completed-quizzes/:quizId/download", async (req, res) => {
 // Generate a share id for a specific quiz
 app.get("/api/completed-quizzes/:quizId/share", async (req, res) => {
   const { quizId } = req.params;
+  const existingRecord = await pool.query(
+    "SELECT share_id FROM shared_quizzes WHERE quiz_id = $1",
+    [quizId]
+  );
+  if (existingRecord.rows.length > 0) {
+    return res.json({ id: existingRecord.rows[0].share_id });
+  }
+
   const shareId = crypto.randomBytes(16).toString("hex");
   await pool.query(
     "INSERT INTO shared_quizzes (share_id, quiz_id) VALUES ($1, $2)",
