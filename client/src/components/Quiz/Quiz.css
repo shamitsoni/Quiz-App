@@ -266,3 +266,27 @@ td {
   background: #e3f2fd;
   color: #1976d2;
 }
+
+/* ShareQuiz styles */
+.share-quiz-summary {
+  background: #d3e4f5;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.share-quiz-questions {
+  width: 100%;
+  max-width: 500px;
+}
+
+.share-quiz-question-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  padding: 16px;
+  margin-bottom: 16px;
+  border-left: 4px solid #1976d2;
+}
