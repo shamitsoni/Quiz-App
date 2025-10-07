@@ -290,3 +290,11 @@ td {
   margin-bottom: 16px;
   border-left: 4px solid #1976d2;
 }
+
+.share-quiz-question-card.correct {
+  border-left: 4px solid #2fd219;
+}
+
+.share-quiz-question-card.incorrect {
+  border-left: 4px solid #d33115;
+}

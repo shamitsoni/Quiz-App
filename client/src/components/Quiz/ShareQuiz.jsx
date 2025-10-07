@@ -37,9 +37,14 @@ function ShareQuiz() {
       <div className="share-quiz-questions">
         <h3>Questions: </h3>
         {questions.map((q, i) => {
+          let correct = q.answer === answers[i].selectedAnswer;
           return (
-            <div key={i} className="share-quiz-question-card">
-              {q.answer === answers[i].selectedAnswer ? "✅" : "❌"}
+            <div
+              key={i}
+              className={`share-quiz-question-card ${
+                correct ? "correct" : "incorrect"
+              }`}
+            >
               {q.question}
             </div>
           );
