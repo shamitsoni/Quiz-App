@@ -268,8 +268,19 @@ td {
 }
 
 /* ShareQuiz styles */
+.share-quiz-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 32px 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+
 .share-quiz-summary {
-  background: #d3e4f5;
+  background: #bddeff;
   border-radius: 10px;
   padding: 20px 24px;
   margin-bottom: 24px;
@@ -292,9 +303,11 @@ td {
 }
 
 .share-quiz-question-card.correct {
+  background-color: #def8db;
   border-left: 4px solid #2fd219;
 }
 
 .share-quiz-question-card.incorrect {
+  background-color: #f7beb4;
   border-left: 4px solid #d33115;
 }
