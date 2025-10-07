@@ -1,3 +1,4 @@
+import "./Quiz.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -23,24 +24,28 @@ function ShareQuiz() {
   const answers = quiz.user_answers;
 
   return (
-    <>
-      <div>Quiz completed: {formattedDate} </div>
-      <div>Total Questions: {quiz.total_questions}</div>
-      <div>
-        Score: {quiz.score}/{quiz.total_questions}
+    <div className="share-quiz-container">
+      <div className="share-quiz-summary">
+        <h2>Quiz completed: {formattedDate} </h2>
+        <div>Total Questions: {quiz.total_questions}</div>
+        <div>
+          Score: {quiz.score}/{quiz.total_questions}
+        </div>
+        <div>Time to complete: {quiz.time_spent}s</div>
       </div>
-      <div>Time to complete: {quiz.time_spent}s</div>
-      <br />
-      <div>Questions:</div>
-      {questions.map((q, i) => {
-        return (
-          <div key={i}>
-            {q.answer === answers[i].selectedAnswer ? "✅" : "❌"}
-            {q.question}
-          </div>
-        );
-      })}
-    </>
+
+      <div className="share-quiz-questions">
+        <h3>Questions: </h3>
+        {questions.map((q, i) => {
+          return (
+            <div key={i} className="share-quiz-question-card">
+              {q.answer === answers[i].selectedAnswer ? "✅" : "❌"}
+              {q.question}
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
