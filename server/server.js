@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import cors from "cors";
 import axios from "axios";
 import dotenv from "dotenv";
@@ -18,9 +19,18 @@ const corsOptions = isLambda
       methods: ["GET", "POST", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization"],
     }
-  : { origin: ["http://localhost:5173", "http://localhost:3000"] };
+  : {
+      origin: ["http://localhost:5173", "http://localhost:3000"],
+    };
+const sessionOptions = {
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false },
+};
 
 app.use(cors(corsOptions));
+app.use(session(sessionOptions));
 app.use(express.json());
 
 const pool = new Pool({
@@ -85,15 +95,13 @@ app.post("/api/login", async (req, res) => {
       });
     }
 
-    res.json({
-      message: "Login successful!",
-      user: {
-        id: user.id,
-        username: user.username,
-        is_admin: user.is_admin,
-        locked: user.locked,
-      },
-    });
+    req.session.user = {
+      id: user.id,
+      username: user.username,
+      is_admin: user.is_admin,
+      locked: user.locked,
+    };
+    res.json({ message: "Login successful!", user: req.session.user });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Login failed." });
