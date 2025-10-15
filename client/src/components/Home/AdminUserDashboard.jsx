@@ -76,15 +76,6 @@ function AdminUserDashboard({ user }) {
     <>
       <NavBar user={viewUser} location="adminUserDashboard" />
       <main className="dashboard-grid">
-        <section className="dashboard-btns">
-          <button
-            className="content-btn"
-            onClick={() => navigate(`/admin/user/${viewUser.id}/stats`)}
-          >
-            Stats
-          </button>
-        </section>
-
         <section className="recent-results-section">
           <header>
             <h1 className="recent-quiz-header">Recent Results</h1>
