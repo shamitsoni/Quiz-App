@@ -81,15 +81,19 @@ function AdminUserDashboard({ user }) {
             <h1 className="recent-quiz-header">Recent Results</h1>
           </header>
           <div className="recent-quiz-container">
-            {recentQuizzes.map((quiz) => (
-              <RecentResult
-                key={quiz.id}
-                quiz={quiz}
-                onViewQuiz={handleViewQuiz}
-                onDownload={handleDownload}
-                onShare={handleShare}
-              />
-            ))}
+            {recentQuizzes.length === 0 ? (
+              <h3>No quizzes found :(</h3>
+            ) : (
+              recentQuizzes.map((quiz) => (
+                <RecentResult
+                  key={quiz.id}
+                  quiz={quiz}
+                  onViewQuiz={handleViewQuiz}
+                  onDownload={handleDownload}
+                  onShare={handleShare}
+                />
+              ))
+            )}
           </div>
         </section>
       </main>
