@@ -102,21 +102,7 @@
   gap: 16px;
 }
 
-/* Dashboard styling */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 32px;
-  margin-top: 32px;
-}
-
-.dashboard-btns {
-  display: flex;
-  justify-content: center;
-  max-height: 100px;
-}
-
-/* Recent results styling */
+/* Dashboard & Recent results styling */
 .recent-results-section {
   display: flex;
   flex-direction: column;

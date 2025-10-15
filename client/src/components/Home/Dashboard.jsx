@@ -59,7 +59,7 @@ function Dashboard({ user, handleLogOut }) {
   return (
     <>
       <NavBar user={user} handleLogOut={handleLogOut} location="dashboard" />
-      <main className="dashboard-grid">
+      <main className="dashboard-body">
         <section className="recent-results-section">
           <header>
             <h1 className="recent-quiz-header">Recent Results</h1>
