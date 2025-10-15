@@ -47,17 +47,31 @@ function getNavActions(user, location, handleLogOut, onExit, quizCompleted) {
     case "dashboard":
       return user.is_admin ? (
         <>
-          <button onClick={() => navigate("/admin")} className="navbar-btn">
+          <button className="navbar-btn" onClick={() => navigate("/quiz")}>
+            Play
+          </button>
+          <button className="navbar-btn" onClick={() => navigate("/stats")}>
+            Stats
+          </button>
+          <button className="navbar-btn" onClick={() => navigate("/admin")}>
             Admin
           </button>
-          <button onClick={handleLogOut} className="navbar-btn">
+          <button className="navbar-btn" onClick={handleLogOut}>
             Logout
           </button>
         </>
       ) : (
-        <button onClick={handleLogOut} className="navbar-btn">
-          Logout
-        </button>
+        <>
+          <button className="navbar-btn" onClick={() => navigate("/quiz")}>
+            Play
+          </button>
+          <button className="navbar-btn" onClick={() => navigate("/stats")}>
+            Stats
+          </button>
+          <button className="navbar-btn" onClick={handleLogOut}>
+            Logout
+          </button>
+        </>
       );
     case "adminUserDashboard":
       return;

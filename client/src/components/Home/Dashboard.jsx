@@ -60,16 +60,6 @@ function Dashboard({ user, handleLogOut }) {
     <>
       <NavBar user={user} handleLogOut={handleLogOut} location="dashboard" />
       <main className="dashboard-grid">
-        <section className="dashboard-btns">
-          <button className="content-btn" onClick={() => navigate("/quiz")}>
-            Play
-          </button>
-
-          <button className="content-btn" onClick={() => navigate("/stats")}>
-            Stats
-          </button>
-        </section>
-
         <section className="recent-results-section">
           <header>
             <h1 className="recent-quiz-header">Recent Results</h1>
