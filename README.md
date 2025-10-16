@@ -51,17 +51,17 @@ flowchart TD
    git clone https://github.com/shamitsoni/quiz-app.git
    cd quiz-app
    ```
-2. Configure environment variables
+2. Configure environment variables  
    Copy the provided template and update with your database credentials and (optional) email service settings
    ```bash
    cp .env.example .env
    ```
-4. Generate database schemas
+4. Generate database schemas  
    Run the initialization script, to create init.sql and set the database owner with the PGUSER value from your .env
    ```bash
    ./gen-init.sh
    ```
-5. Start services with Docker Compose
+5. Start services with Docker Compose  
    Build all containers (frontend, backend, and Postgres) and start the stack. For subsequent starts, exclude the --build flag
    ```bash
    docker-compose up --build
