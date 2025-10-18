@@ -5,6 +5,7 @@ function NavBar({ user, location, handleLogOut, onExit, quizCompleted }) {
     home: "Trivia App",
     dashboard: user && `Welcome, ${user.username}!`,
     adminUserDashboard: user && `[Admin] Viewing ${user.username}`,
+    adminDashboard: "Admin Panel",
     quiz: "Attempting Quiz",
     review: "Reviewing Quiz",
     stats: user && `${user.username}'s Stats`,
@@ -71,7 +72,14 @@ function getNavActions(user, location, handleLogOut, onExit, quizCompleted) {
           </button>
         </>
       );
-
+    case "adminDashboard":
+      return (
+        <>
+          <button className="navbar-btn" onClick={() => navigate("/dashboard")}>
+            Back to Dashboard
+          </button>
+        </>
+      );
     case "quiz":
       return (
         // If quiz is completed -> render simple button, else render button with exit confirmation

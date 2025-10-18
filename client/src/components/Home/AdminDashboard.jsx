@@ -1,6 +1,7 @@
 import "./Admin.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from "./NavBar";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -44,7 +45,7 @@ function AdminDashboard({ admin }) {
 
   return (
     <>
-      <h1>Welcome, Admin.</h1>
+      <NavBar user={admin} location="adminDashboard" />
       <h2>Registered Users:</h2>
       <table className="user-table">
         <thead>
