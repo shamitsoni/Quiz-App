@@ -52,6 +52,7 @@ function AdminDashboard({ admin }) {
           <tr>
             <th>Username</th>
             <th>Dashboard</th>
+            <th>Status</th>
             <th>Manage</th>
           </tr>
         </thead>
@@ -64,6 +65,9 @@ function AdminDashboard({ admin }) {
                   <button onClick={() => viewUserDashboard(user)}>
                     View Dashboard
                   </button>
+                </td>
+                <td className={`status ${user.locked ? "locked" : "active"}`}>
+                  {user.locked ? "Locked" : "Active"}
                 </td>
                 <td>
                   <button onClick={() => toggleLock(user)}>
