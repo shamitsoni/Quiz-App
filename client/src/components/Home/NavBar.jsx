@@ -67,7 +67,10 @@ function getNavActions(user, location, handleLogOut, onExit, quizCompleted) {
     case "adminUserDashboard":
       return (
         <>
-          <button className="navbar-btn" onClick={() => navigate("/stats")}>
+          <button
+            className="navbar-btn"
+            onClick={() => navigate(`/admin/user/${user.id}/stats`)}
+          >
             Stats
           </button>
         </>
