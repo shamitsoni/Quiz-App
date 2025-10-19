@@ -56,3 +56,14 @@ td {
 .manage-btn.lock {
   background: #931a1a;
 }
+
+.admin-action-message {
+  margin: 12px 0;
+  padding: 8px 16px;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  transition: opacity 0.3s;
+}

@@ -7,6 +7,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function AdminDashboard({ admin }) {
   const [users, setUsers] = useState([]);
+  const [actionMessage, setActionMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,12 +42,17 @@ function AdminDashboard({ admin }) {
           )
         );
       });
+
+    setActionMessage(`User ${user.username} has been ${action}ed.`);
+    setTimeout(() => setActionMessage(""), 3000);
   };
 
   return (
     <>
       <NavBar user={admin} location="adminDashboard" />
-      <h2>Registered Users:</h2>
+      {actionMessage && (
+        <div className="admin-action-message">{actionMessage}</div>
+      )}
       <table className="user-table">
         <thead>
           <tr>
