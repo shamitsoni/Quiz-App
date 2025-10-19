@@ -70,7 +70,10 @@ function AdminDashboard({ admin }) {
                   {user.locked ? "Locked" : "Active"}
                 </td>
                 <td>
-                  <button onClick={() => toggleLock(user)}>
+                  <button
+                    className={`manage-btn ${user.locked ? "unlock" : "lock"}`}
+                    onClick={() => toggleLock(user)}
+                  >
                     {user.locked ? "Unlock" : "Lock"}
                   </button>
                 </td>

@@ -1,5 +1,5 @@
 .user-table {
-  width: 50%;
+  width: 100%;
   border-collapse: collapse;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -47,4 +47,12 @@ td {
 
 .status.active {
   color: #158a19;
+}
+
+.manage-btn.unlock {
+  background: #158a19;
+}
+
+.manage-btn.lock {
+  background: #931a1a;
 }
