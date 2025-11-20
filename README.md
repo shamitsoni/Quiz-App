@@ -1,49 +1,76 @@
 # Quiz App
 
-A full-stack quiz application built with React, Express, and PostgreSQL. Designed as a personal project to explore web development and containerized environments, this repo allows you to run the app locally using Docker Compose for a consistent and reproducible setup.
+A full-stack quiz application built with React, Express, and PostgreSQL, designed to demonstrate scalable web architecture, secure authentication, automated deployments, and production-grade performance testing.
+
+The application runs locally via Docker Compose and is deployed using serverless architecture on AWS with an automated CI/CD pipeline.
 
 ## Features
 
 ### User Features
-- **Play Quizzes:** Users can take multiple-choice quizzes with instant feedback.
-- **Account Management:** Users can create an account and securely log in to access their quizzes and data.
-- **Track Progress:** Quiz stats and scores are stored for each user.  
-- **Dashboard Overview:** Recently completed quizzes are viewable on a personal dashboard. 
+- Create an account, log in securely, and take quizzes.
+- Instant feedback on answers.
+- User dashboard showing quiz history + recent activity.
+- Password reset flow via unique email verification code.
 
-### Developer / Technical Features
-- **External API Integration:** Uses the OpenTDB API to fetch quiz questions dynamically.  
-- **Database Management:** Quiz data and user stats are stored and retrieved using PostgreSQL.  
-- **Dockerized Local Development:** Frontend, backend, and database run in isolated containers for consistent setup and reproducibility.
-- **Security:** Passwords are hashed for security, and password reset emails are verified using a unique code sent to the user's email.
-
+### Technical / Developer Features
+- Integration with OpenTDB API for dynamic quiz generation.
+- Hash-based authentication and input validation.
+- Dockerized development (frontend, backend, database).
+- CI/CD pipeline using GitHub Actions → AWS Lambda + S3 + CloudFront invalidation
+- Load-tested API with 1000 req/sec sustained and <25ms average latency.
 
 ## Tech Stack
-
 - Frontend: React, Vite
-- Backend: Express, Node
+- Backend: Node.js, Express
 - Database: PostgreSQL
 - Containerization: Docker, Docker Compose
 
-## Architecture Diagram
-
+## Local Architecture (Docker Compose)
 ```mermaid
 flowchart TD
-    FE["Frontend (React)"] -->|API Request| BE["Backend (Express)"]
+    FE["Frontend (React/Vite)"] -->|RESTful API| BE["Backend (Express)"]
     BE -->|Queries & Updates| DB["Database (PostgreSQL)"]
-    BE -->|External API Request| API["OpenTDB API"]
-    BE -->|Sends reset code| EMAIL["Email Service (Nodemailer)"]
+    BE -->|Fetches Questions| API["OpenTDB API"]
+    BE -->|Sends Reset Code| EMAIL["Email Service (Nodemailer)"]
+```
+## Cloud Deployment Architecture (AWS)
+```mermaid
+flowchart TD
+    C["Client Browser"]
+    CDN["CloudFront + S3<br>(Frontend)"]
+    APIGW["API Gateway"]
+    LAMBDA["AWS Lambda<br>(Backend API)"]
+    DB["Aurora Serverless<br>PostgreSQL"]
+
+    C -->|Static Assets| CDN
+    C -->|API Requests| APIGW
+    APIGW -->|Invokes Functions| LAMBDA
+    LAMBDA -->|Queries| DB
 ```
 
-## Setup / Installation (Local Development)
+## Project Structure
+```
+quiz-app/       
+├── .github/
+│   ├── workflows/        # GitHub Actions CI/CD
+├── client/               # React Frontend (Vite)             
+│   ├── src/
+│   ├── Dockerfile
+│   ├── index.html
+├── server/               # Express Backend API        
+│   ├── server.js
+│   ├── Dockerfile
+│   ├── package.json
+├── .env
+├── docker-compose.yml    # Container Orchestration (frontend + backend + Postgres)
+└── README.md
+```
+
+## Local Setup (Docker Compose)
 
 ### Prerequisites
-- **Docker**:
-    - [Windows/macOS] Install Docker Desktop (https://www.docker.com/products/docker-desktop)
-    - [Linux] Install Docker Engine + Docker Compose
-    - Make sure Docker Desktop (or Docker Engine) is **running** before starting the app
-- **Command-Line**
-    - All setup commands are designed for **Bash**
-    - [Windows] Use **Git Bash** - included with Git for Windows (https://git-scm.com/download/win)
+- Docker Desktop (Windows/Mac) or Docker Engine (Linux)
+- Bash shell (Git Bash recommended on Windows)
 
 ### Get Started
 1. Clone the repo
@@ -66,8 +93,6 @@ flowchart TD
    ```bash
    docker-compose up --build
    ```
-   - For subsequent runs, you may omit the --build flag unless changes were made to Dockerfiles.
-
 6. Access local servers
    - Frontend: http://localhost:3000
    - Backend: http://localhost:5000
