@@ -2,7 +2,7 @@
 
 A full-stack quiz application built with React, Express, and PostgreSQL, designed to demonstrate scalable web architecture, secure authentication, automated deployments, and production-grade performance testing.
 
-The application runs locally via Docker Compose and is deployed using serverless architecture on AWS with an automated CI/CD pipeline.
+The application runs locally via Docker Compose and is deployed using serverless architecture on AWS with automated redeployments via CI/CD pipeline.
 
 ## Features
 
@@ -53,16 +53,16 @@ flowchart TD
 quiz-app/       
 ├── .github/
 │   ├── workflows/        # GitHub Actions CI/CD
-├── client/               # React Frontend (Vite)             
+├── client/               # React Frontend             
 │   ├── src/
 │   ├── Dockerfile
 │   ├── index.html
-├── server/               # Express Backend API        
+├── server/               # Node.js/Express Backend        
 │   ├── server.js
 │   ├── Dockerfile
 │   ├── package.json
 ├── .env
-├── docker-compose.yml    # Container Orchestration (frontend + backend + Postgres)
+├── docker-compose.yml    # Container Orchestration (frontend + backend + database)
 └── README.md
 ```
 
@@ -70,7 +70,7 @@ quiz-app/
 
 ### Prerequisites
 - Docker Desktop (Windows/Mac) or Docker Engine (Linux)
-- Bash shell (Git Bash recommended on Windows)
+- Bash shell (Git Bash recommended for Windows)
 
 ### Get Started
 1. Clone the repo
@@ -83,19 +83,16 @@ quiz-app/
    ```bash
    cp .env.example .env
    ```
-4. Generate database schemas  
+3. Generate database schemas  
    Run the initialization script, to create init.sql and set the database owner with the PGUSER value from your .env
    ```bash
    ./gen-init.sh
    ```
-5. Start services with Docker Compose  
+4. Start services with Docker Compose  
    Build all containers (frontend, backend, and Postgres) and start the stack. For subsequent starts, exclude the --build flag
    ```bash
    docker-compose up --build
    ```
-6. Access local servers
+5. Access local servers
    - Frontend: http://localhost:3000
    - Backend: http://localhost:5000
-
-
-  
