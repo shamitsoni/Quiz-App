@@ -11,9 +11,9 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_s3_bucket" "frontend-bucket" {
-  bucket = "ss-quiz-app-bucket"
-
+module "s3" {
+  source      = "./modules/s3"
+  bucket_name = "ss-quiz-app-bucket"
   tags = {
     Project     = "quiz-app"
     Environment = "dev"
