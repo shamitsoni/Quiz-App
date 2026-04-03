@@ -25,3 +25,16 @@ init.sql
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+crash.log
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
