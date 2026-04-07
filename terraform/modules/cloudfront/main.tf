@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "origin_bucket_policy" {
     ]
 
     resources = [
-      "${var.s3.bucket_arn}/*",
+      "${var.s3_bucket_arn}/*",
     ]
 
     condition {
@@ -26,12 +26,12 @@ data "aws_iam_policy_document" "origin_bucket_policy" {
 }
 
 resource "aws_s3_bucket_policy" "b" {
-  bucket = var.s3.bucket_name
+  bucket = var.s3_bucket_name
   policy = data.aws_iam_policy_document.origin_bucket_policy.json
 }
 
 locals {
-  s3_origin_id = "${var.s3.bucket_name}-origin"
+  s3_origin_id = "${var.s3_bucket_name}-origin"
 }
 
 resource "aws_cloudfront_origin_access_control" "default" {
@@ -43,7 +43,7 @@ resource "aws_cloudfront_origin_access_control" "default" {
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name              = var.s3.bucket_regional_domain_name
+    domain_name              = var.s3_bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.default.id
     origin_id                = local.s3_origin_id
   }
@@ -131,6 +131,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    ssl_support_method  = "sni-only"
+    cloudfront_default_certificate = true
+    ssl_support_method = "sni-only"
   }
 }
