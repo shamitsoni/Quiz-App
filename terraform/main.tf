@@ -29,3 +29,16 @@ module "cloudfront" {
   s3_bucket_name                 = module.s3.bucket_name
   s3_bucket_regional_domain_name = module.s3.bucket_regional_domain_name
 }
+
+module "lambda" {
+  source = "./modules/lambda"
+
+  function_name = "quiz-backend-lambda"
+  role_name = "lambda_execution_role"
+  handler = "index.handler"
+  runtime = "nodejs22.x"
+  filename = "./modules/lambda/bootstrap/placeholder.zip"
+  tags = {
+    Environment = "dev"
+  }
+}

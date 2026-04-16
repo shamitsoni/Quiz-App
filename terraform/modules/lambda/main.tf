@@ -12,34 +12,24 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "lambda_execution" {
-  name               = "lambda_execution_role"
+  name               = var.role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
-resource "aws_lambda_function" "example" {
-  function_name = "quiz-backend-lambda"
+resource "aws_lambda_function" "lambda_function" {
+  function_name = var.function_name
   role          = aws_iam_role.lambda_execution.arn
 
-  handler = "index.handler"
-  runtime = "nodejs22.x"
+  handler = var.handler
+  runtime = var.runtime
 
-  filename = "${path.module}/bootstrap/placeholder.zip"
+  filename = var.filename
 
-  environment {
-    variables = {
-      ENVIRONMENT = "production"
-      LOG_LEVEL   = "info"
-    }
-  }
-
-  tags = {
-    Environment = "production"
-    Application = "example"
-  }
+  tags = var.tags
 
   lifecycle {
     ignore_changes = [
-        filename
+      filename
     ]
   }
 
