@@ -23,6 +23,8 @@ resource "aws_lambda_function" "example" {
   handler = "index.handler"
   runtime = "nodejs22.x"
 
+  filename = "${path.module}/bootstrap/placeholder.zip"
+
   environment {
     variables = {
       ENVIRONMENT = "production"
@@ -34,4 +36,11 @@ resource "aws_lambda_function" "example" {
     Environment = "production"
     Application = "example"
   }
+
+  lifecycle {
+    ignore_changes = [
+        filename
+    ]
+  }
+
 }
