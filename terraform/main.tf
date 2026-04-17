@@ -35,7 +35,7 @@ module "lambda" {
 
   function_name = "quiz-backend-lambda"
   role_name = "lambda_execution_role"
-  handler = "index.handler"
+  handler = "server.handler"
   runtime = "nodejs22.x"
   filename = "./modules/lambda/bootstrap/placeholder.zip"
 
