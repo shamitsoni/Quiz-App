@@ -42,3 +42,9 @@ module "lambda" {
     Environment = "dev"
   }
 }
+
+module "api_gateway" {
+  source = "./modules/api_gateway"
+
+  lambda_invoke_arn = module.lambda.lambda_invoke_arn
+}
