@@ -31,7 +31,8 @@ resource "aws_lambda_function" "lambda_function" {
 
   lifecycle {
     ignore_changes = [
-      filename
+      filename,
+      environment
     ]
   }
 }
