@@ -33,7 +33,7 @@ variable "region" {
   type        = string
 }
 
-variable "api_gateway_rest_api_id" {
-  description = "The ID of the API Gateway REST API"
+variable "api_gateway_http_api_id" {
+  description = "The ID of the API Gateway HTTP API"
   type        = string
 }

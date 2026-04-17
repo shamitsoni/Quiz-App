@@ -40,7 +40,7 @@ module "lambda" {
   filename = "./modules/lambda/bootstrap/placeholder.zip"
 
   region = "us-east-1"
-  api_gateway_rest_api_id = module.api_gateway.rest_api_id
+  api_gateway_http_api_id = module.api_gateway.http_api_id
 
   tags = {
     Environment = "dev"
