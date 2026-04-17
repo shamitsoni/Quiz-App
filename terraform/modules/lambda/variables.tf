@@ -27,3 +27,13 @@ variable "tags" {
   description = "The tags for the lambda function"
   type        = map(string)
 }
+
+variable "region" {
+  description = "The AWS region"
+  type        = string
+}
+
+variable "api_gateway_rest_api_id" {
+  description = "The ID of the API Gateway REST API"
+  type        = string
+}
