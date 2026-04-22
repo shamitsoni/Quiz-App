@@ -1,0 +1,37 @@
+{
+    "Statement": [
+        {
+            "Action": [
+                "apigateway:CreateApi",
+                "apigateway:GetApi",
+                "apigateway:UpdateApi",
+                "apigateway:DeleteApi",
+                "apigateway:GetApis",
+                "apigateway:CreateRoute",
+                "apigateway:GetRoute",
+                "apigateway:UpdateRoute",
+                "apigateway:DeleteRoute",
+                "apigateway:GetRoutes",
+                "apigateway:CreateIntegration",
+                "apigateway:GetIntegration",
+                "apigateway:UpdateIntegration",
+                "apigateway:DeleteIntegration",
+                "apigateway:GetIntegrations",
+                "apigateway:CreateStage",
+                "apigateway:GetStage",
+                "apigateway:UpdateStage",
+                "apigateway:DeleteStage",
+                "apigateway:GetStages",
+                "apigateway:CreateDeployment",
+                "apigateway:GetDeployment",
+                "apigateway:UpdateDeployment",
+                "apigateway:DeleteDeployment",
+                "apigateway:GetDeployments",
+                "apigateway:GET"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:apigateway:*::/apis*"
+        }
+    ],
+    "Version": "2012-10-17"
+}
