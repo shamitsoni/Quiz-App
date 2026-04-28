@@ -11,13 +11,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-module "iam" {
-  source = "./modules/iam"
-
-  user_name            = "quiz-app-deployer"
-  s3_bucket_arn        = module.s3.bucket_arn
-}
-
 module "s3" {
   source = "./modules/s3"
 
