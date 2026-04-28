@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'client/**'
+      - '.github/workflows/deploy-frontend.yml'
 
 jobs:
   deploy-frontend:
@@ -36,8 +39,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.FRONTEND_ROLE_ARN }}
           aws-region: us-east-1
 
       - name: Sync built files to S3 bucket
