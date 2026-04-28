@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'client/**'
+      - '.github/workflows/deploy-frontend.yml'
 
 jobs:
   deploy-frontend:
@@ -36,14 +39,13 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          role-to-assume: ${{ secrets.FRONTEND_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Sync built files to S3 bucket
-        run: aws s3 sync ./dist/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
+        run: aws s3 sync ./dist/ s3://${{ vars.S3_BUCKET_NAME }} --delete
         working-directory: ./client
 
       - name: Create CloudFront invalidation
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/index.html"
+          aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/index.html"
