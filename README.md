@@ -1,8 +1,8 @@
 # Quiz App
 
-A full-stack quiz application built with React, Express, and PostgreSQL, designed to demonstrate scalable web architecture, secure authentication, automated deployments, and production-grade performance testing.
+A full-stack quiz application built with React, Express, and PostgreSQL, featuring user authentication, dynamic quiz generation, and quiz history tracking.
 
-The application runs locally via Docker Compose and is deployed using serverless architecture on AWS with automated redeployments via CI/CD pipeline.
+The application uses Docker Compose for local development and AWS serverless services for cloud deployment. Infrastructure is provisioned with Terraform, and deployments are automated through GitHub Actions.
 
 ## Features
 
@@ -13,40 +13,55 @@ The application runs locally via Docker Compose and is deployed using serverless
 - Password reset flow via unique email verification code.
 
 ### Technical / Developer Features
-- Integration with OpenTDB API for dynamic quiz generation.
-- Hash-based authentication and input validation.
-- Dockerized development (frontend, backend, database).
-- CI/CD pipeline using GitHub Actions → AWS Lambda + S3 + CloudFront invalidation
-- Load-tested API with 1000 req/sec sustained and <25ms average latency.
+- Integration with the external OpenTDB API for dynamic quiz generation.
+- Password hashing, user authentication, and input validation.
+- Containerized local development using Docker Compose.
+- AWS serverless deployment using S3, CloudFront, API Gateway, Lambda, and Aurora Serverless v2.
+- Infrastructure provisioning with Terraform.
+- Automated frontend and backend deployments using GitHub Actions with AWS OIDC authentication.
 
 ## Tech Stack
-- Frontend: React, Vite
-- Backend: Node.js, Express
-- Database: PostgreSQL
-- Containerization: Docker, Docker Compose
+- **Frontend:** React, Vite
+- **Backend:** Node.js, Express
+- **Database:** PostgreSQL, Amazon Aurora Serverless v2
+- **Containerization:** Docker, Docker Compose
+- **Cloud:** AWS Lambda, API Gateway, S3, CloudFront
+- **Infrastructure as Code:** Terraform
+- **CI/CD:** GitHub Actions, AWS IAM, OIDC
 
 ## Local Architecture (Docker Compose)
 ```mermaid
 flowchart TD
-    FE["Frontend (React/Vite)"] -->|RESTful API| BE["Backend (Express)"]
-    BE -->|Queries & Updates| DB["Database (PostgreSQL)"]
-    BE -->|Fetches Questions| API["OpenTDB API"]
-    BE -->|Sends Reset Code| EMAIL["Email Service (Nodemailer)"]
+    FE["React Frontend<br>(Docker Container)"]
+    BE["Express Backend<br>(Docker Container)"]
+    DB[("PostgreSQL<br>(Docker Container)")]
+    API["OpenTDB<br>(External API)"]
+    EMAIL["Email Provider<br>(External Service)"]
+
+    FE -->|HTTP Requests| BE
+    BE -->|SQL Queries| DB
+    BE -.->|HTTPS Requests| API
+    BE -.->|Email via Nodemailer| EMAIL
 ```
+
+The frontend, backend, and PostgreSQL database run locally through Docker Compose. The Express backend also communicates with external services to retrieve quiz questions and send password reset emails.
+
 ## Cloud Deployment Architecture (AWS)
 ```mermaid
 flowchart TD
     C["Client Browser"]
-    CDN["CloudFront + S3<br>(Frontend)"]
+    CDN["CloudFront + S3<br>(Static Frontend)"]
     APIGW["API Gateway"]
-    LAMBDA["AWS Lambda<br>(Backend API)"]
-    DB["Aurora Serverless<br>PostgreSQL"]
+    LAMBDA["AWS Lambda<br>(Express Backend)"]
+    DB[("Aurora Serverless v2<br>(PostgreSQL)")]
 
-    C -->|Static Assets| CDN
+    C -->|Loads Frontend| CDN
     C -->|API Requests| APIGW
-    APIGW -->|Invokes Functions| LAMBDA
-    LAMBDA -->|Queries| DB
+    APIGW -->|Invokes| LAMBDA
+    LAMBDA -->|SQL Queries| DB
 ```
+
+The React frontend is hosted as static assets in Amazon S3 and delivered through CloudFront. API requests are routed through API Gateway to the Express backend running on AWS Lambda, which communicates with an Aurora Serverless v2 PostgreSQL database.
 
 ## Project Structure
 ```
@@ -57,12 +72,14 @@ quiz-app/
 │   ├── src/
 │   ├── Dockerfile
 │   ├── index.html
-├── server/               # Node.js/Express Backend        
+├── server/               # Express Backend        
 │   ├── server.js
 │   ├── Dockerfile
-│   ├── package.json
+├── terraform/            # Infrastructure as Code        
+│   ├── modules/
+│   ├── main.tf
 ├── .env
-├── docker-compose.yml    # Container Orchestration (frontend + backend + database)
+├── docker-compose.yml    # Container Orchestration
 └── README.md
 ```
 
